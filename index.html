@@ -1,0 +1,2832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP exam · 29 questions (full PDF content)</title>
+    <!-- clean HTML structure – ready for CSS/JS (neon, fade, circular progress, localStorage) -->
+    <style>
+/* ===== CSS for Futuristic OOP Exam Prep ===== */
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;600;700&display=swap');
+
+/* ===== RESET & BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #0b0c1e;
+  min-height: 100vh;
+  position: relative;
+  color: #e0e0ff;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* animated moving gradient background (futuristic) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Static grid merged here so it never animates */
+  background:
+    radial-gradient(circle at 30% 40%, #1e2a5a, #0a0c1a 60%),
+    repeating-linear-gradient(45deg, rgba(0, 255, 255, 0.02) 0px, rgba(0, 255, 255, 0.02) 2px, transparent 2px, transparent 6px);
+  z-index: -2;
+}
+
+/* Static grid pattern stays on body::before (no animation) */
+body::before {
+  background:
+    radial-gradient(circle at 30% 40%, #1e2a5a, #0a0c1a 60%),
+    repeating-linear-gradient(45deg, rgba(0, 255, 255, 0.02) 0px, rgba(0, 255, 255, 0.02) 2px, transparent 2px, transparent 6px);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* Only the moving glows animate — removed expensive repeating-linear-gradient */
+  background:
+    radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.15) 0%, transparent 30%),
+    radial-gradient(circle at 30% 80%, rgba(170, 0, 255, 0.12) 0%, transparent 35%);
+  animation: shiftBg 40s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+  /* Pre-promote so animation stays on GPU */
+  will-change: transform;
+}
+
+@keyframes shiftBg {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(1deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ===== PROGRESS TRACKER (circular) ===== */
+.progress-tracker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto 1rem;
+  width: 120px;
+  position: relative;
+}
+
+.progress-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(#00ffff 0deg 0deg, #1f2a4a 0deg 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px #00ffff, 0 0 30px #4d4dff;
+  transition: box-shadow 0.3s;
+  position: relative;
+}
+
+.progress-circle::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #0e1020;
+  border-radius: 50%;
+  box-shadow: inset 0 0 10px #000;
+}
+
+.progress-percentage {
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #fff;
+  text-shadow: 0 0 8px cyan;
+  z-index: 2;
+}
+
+.progress-label {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a0a0ff;
+  text-shadow: 0 0 5px blue;
+}
+
+/* ===== WELCOME SECTION ===== */
+.welcome-section {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.neon-gradient-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  font-weight: 700;
+  background: linear-gradient(45deg, #00ffff, #ff00ff, #00ffff, #ffaa00);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: neonFlow 6s ease infinite, float 4s ease-in-out infinite;
+  text-shadow: 0 0 15px rgba(0,255,255,0.7);
+  will-change: transform;
+}
+
+@keyframes neonFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.fade-pulse-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: #c0c0ff;
+  margin: 0.5rem 0;
+  opacity: 0;
+  animation: fadeInPulse 3s infinite alternate;
+  text-shadow: 0 0 8px #aaf;
+}
+
+@keyframes fadeInPulse {
+  0% { opacity: 0.6; text-shadow: 0 0 2px #aaf; }
+  100% { opacity: 1; text-shadow: 0 0 20px cyan, 0 0 40px #00f; }
+}
+
+.creator-glow {
+  font-size: 1.2rem;
+  color: #bbf;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+  animation: glowPulse 2.5s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { text-shadow: 0 0 5px cyan, 0 0 10px magenta; }
+  to { text-shadow: 0 0 15px cyan, 0 0 30px magenta, 0 0 50px blue; }
+}
+
+/* ===== QUESTIONS CONTAINER (responsive grid) ===== */
+.questions-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.8rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+}
+
+@media (min-width: 768px) {
+  .questions-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 1rem 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .questions-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== QUESTION CARD ===== */
+.question-card {
+  background: rgba(10, 15, 35, 0.92); /* slightly more opaque — same look, no blur needed */
+  border: 1px solid #2f3b7a;
+  border-radius: 24px;
+  padding: 1.8rem 1.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  /* Only transition GPU-composited properties — never 'all' */
+  transition: transform 0.3s cubic-bezier(0.2,0.9,0.3,1),
+              box-shadow 0.3s cubic-bezier(0.2,0.9,0.3,1),
+              border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  /* Isolate reflows to this card only */
+  contain: layout style;
+  /* Pre-promote to GPU layer */
+  will-change: transform;
+}
+
+.question-card:hover {
+  border-color: #0ff;
+  box-shadow: 0 0 25px #0ff, 0 0 40px #4a4aff;
+  transform: translateY(-6px) scale(1.02);
+  background: rgba(15, 20, 40, 0.9);
+}
+
+.question-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.1), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.question-card:hover::after {
+  opacity: 1;
+}
+
+.question-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #d0d0ff;
+  margin-bottom: 1.2rem;
+  border-left: 4px solid #0ff;
+  padding-left: 1rem;
+  text-shadow: 0 0 8px blue;
+}
+
+/* ===== ANSWER SECTION (hidden/expandable) ===== */
+.answer {
+  /* Use grid-template-rows trick — GPU friendly, no 0→2000px hack */
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+  transition: grid-template-rows 0.45s ease, opacity 0.4s ease, margin 0.3s, padding 0.3s, border-color 0.3s;
+  margin: 0;
+  background: rgba(0, 20, 40, 0.5);
+  border-radius: 16px;
+  padding: 0 1rem;
+  border-left: 2px solid transparent;
+  font-size: 0.95rem;
+  color: #c0d0ff;
+}
+
+/* Inner wrapper needed for grid-template-rows trick */
+.answer-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.answer:not(.hidden) {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0 1.5rem;
+  border-left-color: #0ff;
+  box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.1);
+}
+
+/* formatting inside answers (from PDF) */
+.answer h4 {
+  color: #aaf;
+  margin: 1rem 0 0.3rem;
+  font-size: 1.1rem;
+  text-shadow: 0 0 5px cyan;
+  border-bottom: 1px solid #335;
+  padding-bottom: 0.2rem;
+}
+
+.answer ul, .answer ol {
+  margin: 0.5rem 0 0.5rem 1.8rem;
+}
+
+.answer li {
+  margin: 0.3rem 0;
+}
+
+.answer pre {
+  background: #0d111c;
+  border: 1px solid #2a3f6e;
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #bbffbb;
+  box-shadow: 0 0 15px rgba(0,255,0,0.2);
+  margin: 1rem 0;
+}
+
+.answer code {
+  background: #1a1f33;
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+  color: #ffb86b;
+}
+
+.answer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  background: rgba(0,0,0,0.3);
+}
+
+.answer th, .answer td {
+  border: 1px solid #3f4b7a;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.answer th {
+  background: #1e2a4a;
+  color: #0ff;
+}
+
+/* ===== BUTTONS ===== */
+.expand-btn, .review-btn {
+  background: transparent;
+  border: 1.5px solid #2f4f8a;
+  color: #eef;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.8rem 1.2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  letter-spacing: 0.5px;
+  margin-top: 0.8rem;
+  align-self: flex-start;
+}
+
+.expand-btn {
+  background: rgba(0, 255, 255, 0.05);
+  border-color: #0ff;
+  color: #0ff;
+  text-shadow: 0 0 5px cyan;
+  margin-bottom: 0.5rem;
+}
+
+.expand-btn:hover {
+  background: #0ff;
+  color: #0a0c1e;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+  border-color: #0ff;
+  font-weight: 600;
+}
+
+.review-btn {
+  border-color: #a970ff;
+  color: #dbb0ff;
+  background: rgba(160, 0, 255, 0.1);
+}
+
+.review-btn:hover {
+  background: #a970ff;
+  color: #000;
+  box-shadow: 0 0 20px #bf7fff, 0 0 45px #a970ff;
+  border-color: #f0f;
+}
+
+/* reviewed state – toggled by JS */
+.review-btn.reviewed {
+  background: #00c9b6;
+  border-color: #0ff;
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 0 25px #0ff, 0 0 60px #0ff;
+  background: linear-gradient(145deg, #0ff, #2affb0);
+}
+
+.review-btn.reviewed:hover {
+  background: #0ff;
+  box-shadow: 0 0 30px cyan, 0 0 80px lime;
+}
+
+/* align buttons in card */
+.question-card .expand-btn,
+.question-card .review-btn {
+  width: fit-content;
+  min-width: 140px;
+}
+
+/* spacing */
+.review-btn {
+  margin-top: 1rem;
+}
+
+/* ===== ANIMATIONS FOR EXPAND (smooth) ===== */
+.answer:not(.hidden) {
+  animation: glowFadeIn 0.8s;
+}
+
+@keyframes glowFadeIn {
+  0% { opacity: 0; border-left-color: transparent; box-shadow: none; }
+  50% { opacity: 0.8; border-left-color: #0ff; }
+  100% { opacity: 1; border-left-color: #0ff; }
+}
+
+/* ===== RESPONSIVE TWEAKS ===== */
+@media (max-width: 600px) {
+  .question-card {
+    padding: 1.2rem;
+  }
+
+  .question-title {
+    font-size: 1.2rem;
+  }
+
+  .expand-btn, .review-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .progress-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .progress-circle::before {
+    width: 64px;
+    height: 64px;
+  }
+
+  .progress-percentage {
+    font-size: 1.2rem;
+  }
+}
+
+/* ===== UTILITY (hidden class used by JS) ===== */
+.hidden {
+  display: none; /* fallback, but we use max-height for smoothness, so hidden is handled by JS toggling class */
+}
+
+/* override: ensure answer.hidden is collapsed */
+.answer.hidden {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  padding: 0 1rem;
+  margin: 0;
+  border-left-color: transparent;
+}
+
+/* optional glowing effect for progress circle based on % (will be set by JS inline style) */
+.progress-circle {
+  transition: background 0.3s;
+}
+</style>
+</head>
+<body>
+
+    <!-- progress tracker (circular) – top of page -->
+    <div class="progress-tracker" aria-label="review progress">
+        <div class="progress-circle" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <span class="progress-percentage" id="review-percentage">0%</span>
+        </div>
+        <span class="progress-label">questions reviewed</span>
+    </div>
+
+    <!-- welcome section with animated titles & creator -->
+    <header class="welcome-section">
+        <h1 class="neon-gradient-title">Object Oriented Programming</h1>
+        <p class="fade-pulse-subtitle">Exam Preparation Questions</p>
+        <p class="creator-glow">Made by Adnan Foisal</p>
+    </header>
+
+    <!-- MAIN CONTENT: 29 question cards from PDF (preserves full text, code, bullet points) -->
+    <main class="questions-container" aria-label="list of exam questions">
+
+        <!-- ============ QUESTION 1 ============ -->
+        <article class="question-card" data-question-id="1">
+            <h2 class="question-title">1. What is Object-Oriented Programming (OOP)?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-1">Show answer</button>
+            <div id="answer-1" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Object-Oriented Programming (OOP) is a programming paradigm centered around the concept of "objects," which are instances of "classes". These objects encapsulate data (attributes/fields) and the procedures that operate on that data (behaviors/methods). OOP promotes code organization through principles like abstraction, encapsulation, inheritance, and polymorphism, leading to software that is modular, maintainable, and scalable.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Class:</strong> The blueprint for creating objects. Declared with the 'class' keyword.</li>
+                    <li><strong>Object:</strong> An instance of a class created using the 'new' keyword.</li>
+                    <li><strong>Instance:</strong> Synonyms with an object; refers to a specific realization of a class.</li>
+                    <li><strong>Encapsulation:</strong> Achieved by making fields private ('private') and exposing them via public properties or methods.</li>
+                    <li><strong>Inheritance:</strong> Implemented using the ':' symbol, e.g., 'class Dog: Animal'. C# supports single inheritance for classes.</li>
+                    <li><strong>Polymorphism:</strong> Achieved through method overriding ('override') and interfaces.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// 1. Define a 'class' as a blueprint.
+public class Car {
+    // 2. Fields to store data (attributes).
+    private string _color;
+
+    // 3. Constructor to initialize the object.
+    public Car(string color) => _color = color;
+
+    // 4. Method representing behavior.
+    public void Drive() => Console.WriteLine($"The {_color} car is driving");
+}
+
+// 5. Create an 'object' (instance) from the class.
+Car myCar = new Car("red");
+// 6. Call a method on the object.
+myCar.Drive(); // Output: "The red car is driving."</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A class is like a blueprint for a house, defining rooms and wiring. An object is a specific house built from that blueprint. You can build many identical houses (objects) from one blueprint (class). This allows for standardized creation and management of complex entities.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Object vs. Class:</strong> A class is a static template, while an object is a dynamic instance created from it.</li>
+                    <li><strong>Instance vs. Object:</strong> These terms are interchangeable in modern C# parlance; both refer to a concrete realization of a class.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Modularity:</strong> Code is organized into self-contained objects, making large projects easier to manage.</li>
+                    <li><strong>Reusability:</strong> Inheritance allows new classes to be built upon existing ones without rewriting code.</li>
+                    <li><strong>Maintainability:</strong> Changes to one object's implementation have minimal impact on others due to encapsulation.</li>
+                    <li><strong>Scalability:</strong> New functionality can be added by creating new classes that interact with existing ones, adhering to the Open/Closed Principle.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing a class declaration with an object instantiation. A class is not an object; it's a definition.</li>
+                    <li>Assuming multiple inheritance is supported for classes in C# (it is not); this is a key difference from languages like C++.</li>
+                    <li>Misunderstanding that while a class can only inherit from one parent class, it can implement multiple interfaces.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Objects are instances of classes, created with <code>new</code>.</li>
+                    <li>Four Pillars: Abstraction, Encapsulation, Inheritance, Polymorphism.</li>
+                    <li>Classes define blueprints; Objects are the actual things built from those blueprints.</li>
+                    <li>C# uses <code>:</code> for inheritance (e.g., <code>class Dog : Animal</code>).</li>
+                    <li>OOP enhances modularity, reusability, and maintainability.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 2 ============ -->
+        <article class="question-card" data-question-id="2">
+            <h2 class="question-title">2. What are the four main principles of OOP?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-2">Show answer</button>
+            <div id="answer-2" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>The four foundational pillars of Object-Oriented Programming are Abstraction, Encapsulation, Inheritance, and Polymorphism. Together, they provide a framework for modeling complex systems by organizing code into logical, interacting objects. They promote code that is flexible, reusable, and easy to understand and maintain.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Abstraction:</strong> Hiding complex implementation details and showing only essential features. Achieved with <code>abstract</code> classes and interfaces.</li>
+                    <li><strong>Encapsulation:</strong> Bundling data (fields) and methods together within a class and restricting direct access. Managed with access modifiers like <code>private</code>, <code>public</code>, and <code>protected</code>.</li>
+                    <li><strong>Inheritance:</strong> A mechanism where a new class inherits properties and behaviors from an existing class. Implemented with the <code>:</code> syntax (e.g., <code>class Child : Parent</code>).</li>
+                    <li><strong>Polymorphism:</strong> The ability for different classes to be treated as instances of the same class through a common interface. Achieved via method overriding (<code>virtual</code>/<code>override</code>) and interfaces.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// Abstract class demonstrates Abstraction.
+public abstract class Animal {
+    // Virtual method enables Polymorphism.
+    public virtual void MakeSound() => Console.WriteLine("Some generic animal sound");
+}
+
+// Inheritance
+public class Dog : Animal {
+    // Polymorphism via override
+    public override void MakeSound() => Console.WriteLine("Woof!");
+}
+
+// Encapsulation - private field with public property.
+public class BankAccount {
+    private decimal balance;
+    public decimal Balance {
+        get => balance;
+        set => balance = value >= 0 ? value : throw new ArgumentException("Negative not allowed");
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Think of a remote control (the interface). You don't need to know how every button internally works (Abstraction). The remote itself is a single unit (Encapsulation). Different remotes for different devices (TV, Stereo) share common buttons but have unique functions (Inheritance). You press the "Power" button, and the correct action happens whether it's your TV or stereo (Polymorphism).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <p>These principles are complementary, not mutually exclusive. For example, an abstract class often provides a base for Inheritance and defines an interface for Polymorphism, while its private fields enforce Encapsulation.</p>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Abstraction:</strong> Use when you want to hide complexity and provide a simple interface.</li>
+                    <li><strong>Encapsulation:</strong> Use to protect an object's integrity by controlling access to its data.</li>
+                    <li><strong>Inheritance:</strong> Use to model "is-a" relationships and avoid code duplication.</li>
+                    <li><strong>Polymorphism:</strong> Use when you want to write generic code that can work with objects of different types through a common base.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Thinking these are rigid rules rather than guiding principles. Real-world design often involves trade-offs.</li>
+                    <li>Overusing inheritance (the "inheritance hierarchy trap"). Composition over inheritance is often preferred.</li>
+                    <li>Mistaking an abstract class for an interface. Abstract classes can have implemented members and constructors; interfaces cannot (in older C# versions).</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>A‑E‑I‑P: The acronym for the four pillars.</li>
+                    <li>Abstraction hides complexity; Encapsulation bundles data and controls access.</li>
+                    <li>Inheritance creates "is-a" hierarchies; Polymorphism enables "one interface, multiple implementations".</li>
+                    <li>Key keywords: <code>abstract</code>, <code>interface</code>, <code>private</code>, <code>:</code> (inheritance), <code>virtual</code>, <code>override</code>.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 3 ============ -->
+        <article class="question-card" data-question-id="3">
+            <h2 class="question-title">3. What is an object? How is it different from a class?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-3">Show answer</button>
+            <div id="answer-3" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>An object is a fundamental building block in OOP, representing a specific instance of a class. It is a concrete entity in memory that has a state (its data/fields) and behavior (its methods/functions). A class, conversely, is a static blueprint or template used to define the structure and behavior that the objects will have. You can create many objects from a single class.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Class:</strong> A user-defined data type that serves as a template. Defined with the <code>class</code> keyword.</li>
+                    <li><strong>Object:</strong> An instance of a class. Created at runtime using the <code>new</code> keyword followed by a constructor call.</li>
+                    <li><strong>Instantiation:</strong> The process of creating an object from a class.</li>
+                    <li><strong>Reference Type:</strong> In C#, classes are reference types. An object variable holds a reference to the object's data in memory.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// 1. 'Car' is a CLASS - a blueprint.
+public class Car {
+    public string Color;   // Field to hold state
+    public void Start() { } // Method to hold behavior
+}
+
+class Program {
+    static void Main() {
+        // 2. 'myCar' is an OBJECT - a specific instance.
+        // 'new Car()' is the INSTANCE creation.
+        Car myCar = new Car();
+
+        // 3. 'yourCar' is ANOTHER OBJECT, another instance.
+        Car yourCar = new Car();
+        // Both 'myCar' and 'yourCar' have their own 'Color' and 'Start' methods.
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A class is like a cookie cutter, defining the shape and size of a cookie. An object is the actual cookie that is stamped out by the cutter. You can make countless cookies (objects) from one cutter (class), and each cookie is a separate, independent entity.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Class</th><th>Object</th></tr></thead>
+                    <tbody>
+                        <tr><td>Nature</td><td>Blueprint/template (Static)</td><td>Instance based on the blueprint (Dynamic)</td></tr>
+                        <tr><td>Memory</td><td>Does not allocate memory when declared.</td><td>Allocates memory when created with new.</td></tr>
+                        <tr><td>Lifetime</td><td>Exists for the duration of the program compilation.</td><td>Exists during program execution until garbage collected.</td></tr>
+                        <tr><td>Purpose</td><td>To define data type and its associated methods.</td><td>To represent a real-world entity with a specific state.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <p>Using classes allows for code reuse and standardization. You define the logic once in the class and can create many consistent objects. Using objects allows for state management. Each object can hold different data values, allowing the program to model a diverse collection of entities (e.g., a fleet of cars with different colors).</p>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing the declaration of a class with the creation of an object. <code>Car myCar;</code> declares a variable but doesn't create an object; <code>Car myCar = new Car();</code> does.</li>
+                    <li>Understanding that two object variables can refer to the same object in memory (aliasing), meaning changes made through one variable will be visible through the other.</li>
+                    <li>Remembering that for value types (structs), the object's data is copied, whereas for reference types (classes), only the reference is copied.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Class = Template, Object = Real Thing.</li>
+                    <li><code>new</code> keyword is what creates an object from a class.</li>
+                    <li>A class is a blueprint; an object is a concrete instance.</li>
+                    <li>Classes define what an object is; objects represent who it is (with its own state).</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 4 ============ -->
+        <article class="question-card" data-question-id="4">
+            <h2 class="question-title">4. What is the difference between an instance and an object?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-4">Show answer</button>
+            <div id="answer-4" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>In the context of C# and modern OOP terminology, the terms "instance" and "object" are largely synonymous and can be used interchangeably. Both refer to a concrete realization of a class that exists in memory during program execution. The term "instance" emphasizes the relationship to its class template, while "object" is a more general term for the entity itself.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Object:</strong> The general term for a piece of data with state and behavior. Often used in the context of the <code>System.Object</code> base class.</li>
+                    <li><strong>Instance:</strong> Emphasizes that a particular item is an example of a class. Every object is an instance of its class.</li>
+                    <li><strong><code>this</code> Keyword:</strong> Refers to the current instance of a class within its own methods and constructors.</li>
+                    <li><strong><code>GetType()</code> Method:</strong> The <code>Object</code> class provides a <code>GetType()</code> method that returns the precise runtime type of an instance/object.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Person {
+    public string Name;
+    // 'this' refers to the specific INSTANCE of the Person class.
+    public Person(string name) {
+        this.Name = name; // Assigns the 'Name' field of THIS instance.
+    }
+    public void Greet() {
+        Console.WriteLine($"Hello, I am {this.Name}."); // 'this' is the current instance
+    }
+}
+
+class Program {
+    static void Main() {
+        // 'john' is a VARIABLE holding a REFERENCE to an OBJECT.
+        // This object is also referred to as an INSTANCE of the 'Person' class.
+        Person john = new Person("John");
+        john.Greet(); // 'john' is the current instance when 'Greet' is called.
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>If a class is a recipe for chocolate chip cookies, then each individual cookie baked according to that recipe is both an "object" and an "instance." There's no practical difference in daily use; both terms describe the tangible result of applying the template.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Nuance:</strong> "Object" is a broader OOP term. "Instance" specifically highlights the "one of many" nature derived from a class template. For example, you might say "Every object is an instance of a class".</li>
+                    <li><strong>Technical Usage:</strong> In some frameworks or discussions, "instance" might be preferred when discussing dependency injection or reflection, emphasizing the specific copy of a class being used. Otherwise, the terms are interchangeable.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <p>Using either term correctly demonstrates a solid understanding of OOP concepts. Being aware of the subtle distinction helps in reading technical documentation or participating in advanced discussions where precision matters. For exam purposes, treat them as the same unless a question specifically probes for a nuanced difference.</p>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Some outdated sources or exams might try to force a distinction where none is necessary in modern C#. The consensus is that they are synonyms.</li>
+                    <li>Confusing an object/instance with a class. The class is the definition; the object/instance is the runtime entity.</li>
+                    <li>Not realizing that even primitive types like <code>int</code> have object-like representations via boxing, though they are value types.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Synonyms: In C#, "instance" and "object" mean the same thing.</li>
+                    <li>Creation: Both are created using the <code>new</code> keyword.</li>
+                    <li>Emphasis: "Object" is the general term; "instance" emphasizes the link to its class template.</li>
+                    <li>The <code>this</code> keyword always refers to the current instance of the class.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 5 ============ -->
+        <article class="question-card" data-question-id="5">
+            <h2 class="question-title">5. What are the advantages of OOP over procedural programming?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-5">Show answer</button>
+            <div id="answer-5" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>OOP offers several key advantages over procedural programming by organizing code around data and objects rather than a sequence of functions. This leads to better modularity, code reusability, maintainability, and scalability, especially in large and complex applications. It models real-world problems more naturally, resulting in software that is easier to design, understand, and evolve over time.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Encapsulation:</strong> Bundling data and methods within a class, protecting data with access modifiers (<code>private</code>, <code>public</code>).</li>
+                    <li><strong>Inheritance:</strong> Reusing code from a parent class in a child class using the <code>:</code> syntax, reducing redundancy.</li>
+                    <li><strong>Polymorphism:</strong> Allowing different classes to be used interchangeably through a common interface or base class, achieved with <code>virtual</code>/<code>override</code>.</li>
+                    <li><strong>Abstraction:</strong> Simplifying complex reality by modeling classes appropriate to the problem domain, hiding unnecessary details.</li>
+                    <li><strong>Namespaces (<code>namespace</code>):</strong> Organizing related classes to prevent naming conflicts, a feature more critical in large OOP projects.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// Procedural Approach: Data and functions are separate.
+public static class EmployeeProcedural {
+    public static Dictionary<int, string> employeeNames = new();
+    public static void AddEmployee(int id, string name) => employeeNames[id] = name;
+    public static void PrintAllEmployees() => foreach(var name in employeeNames.Values) Console.WriteLine(name);
+}
+
+// OOP Approach: Data and behavior are bundled in a class (Encapsulation).
+public class EmployeeCollection {
+    private List<string> _employeeNames = new(); // Data is encapsulated.
+    public void AddEmployee(string name) => _employeeNames.Add(name); // Behavior
+    public void PrintAllEmployees() {
+        foreach(var name in _employeeNames) Console.WriteLine(name);
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Managing a library. A procedural approach would involve separate functions like <code>AddBookToDatabase()</code>, <code>CheckOutBook()</code>, etc. An OOP approach models each book as an object with its own data (title, author, ISBN) and methods (<code>checkOut()</code>, <code>returnBook()</code>). This makes the system more intuitive and easier to extend (e.g., adding a "Magazine" class that inherits from "Publication").</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Aspect</th><th>Procedural Programming</th><th>Object-Oriented Programming</th></tr></thead>
+                    <tbody>
+                        <tr><td>Structure</td><td>Functions and data are separate.</td><td>Data and functions are bundled into objects/classes.</td></tr>
+                        <tr><td>Data Access</td><td>Global variables can be accessed by any function, risking unintended side effects.</td><td>Data is encapsulated within objects and accessed through controlled public methods.</td></tr>
+                        <tr><td>Code Reuse</td><td>Achieved through function calls.</td><td>Achieved through inheritance and composition.</td></tr>
+                        <tr><td>Problem Modeling</td><td>Focuses on a step-by-step solution.</td><td>Models the problem domain directly using real-world entities (objects).</td></tr>
+                        <tr><td>Scalability</td><td>Can become difficult to manage as the program grows.</td><td>More scalable and maintainable due to modularity and encapsulation.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Maintainability:</strong> Changes to one module (class) have less impact on others because of strong encapsulation boundaries.</li>
+                    <li><strong>Reusability:</strong> Inheritance allows developers to build new functionality on top of existing, well-tested code, saving development time.</li>
+                    <li><strong>Security:</strong> Encapsulation protects an object's internal state from invalid or unauthorized access, improving data integrity.</li>
+                    <li><strong>Team Development:</strong> Different developers can work on different classes simultaneously without stepping on each other's toes, thanks to clear interfaces and encapsulation.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Assuming OOP is always superior. For very small, linear tasks, procedural code can be simpler and faster to write.</li>
+                    <li>Over-engineering a problem with unnecessary classes and inheritance hierarchies. Simplicity should be the goal.</li>
+                    <li>Confusing the organizational benefits of OOP with performance benefits. OOP introduces a small overhead compared to procedural code, but the trade-off is almost always worth it for application complexity.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>OOP organizes code around data (objects), not actions (functions).</li>
+                    <li>Key advantages: Modularity, Reusability, Maintainability, Scalability.</li>
+                    <li>OOP is better for modeling complex, real-world systems.</li>
+                    <li>Encapsulation, Inheritance, and Polymorphism are the mechanisms that enable these advantages.</li>
+                    <li>Procedural is better for simple, linear tasks.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 6 ============ -->
+        <article class="question-card" data-question-id="6">
+            <h2 class="question-title">6. Can we achieve OOP without classes in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-6">Show answer</button>
+            <div id="answer-6" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>While C# is fundamentally designed around classes and structs as its primary user-defined types, achieving a complete, pure form of OOP without them is not feasible. OOP is intrinsically tied to the concept of classes as blueprints for objects. However, C# incorporates functional programming paradigms and other features that allow for some object-oriented thinking without explicitly defining traditional classes for every entity, such as with records, tuples, and lambda expressions.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Records:</strong> Introduced in C# 9, records are a special reference type designed for encapsulating data immutably. They provide value-based equality semantics by default. Syntax: <code>public record Person(string Name, int Age);</code></li>
+                    <li><strong>Structs:</strong> Value types that can also contain methods, properties, and events, thus supporting encapsulation.</li>
+                    <li><strong>Tuples:</strong> Provide a lightweight way to group multiple values together, similar to anonymous objects, enabling data bundling without a formal class definition. Syntax: <code>(string name, int age) person = ("Alice", 30);</code></li>
+                    <li><strong>Lambda Expressions & Anonymous Methods:</strong> Allow for passing behavior (functions) as data, which is a key aspect of OOP, but without a named class or method structure. Syntax: <code>Func&lt;int,int&gt; square = x =&gt; x * x;</code></li>
+                    <li><strong><code>object</code> Class:</strong> All types in C# ultimately derive from the <code>System.Object</code> class, providing a universal base for polymorphism.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// Instead of a full class, using a Record (a modern, concise way to define data)
+public record Product(string Name, decimal Price);
+
+// Using a tuple to pass around a group of related values.
+public class OrderProcessor {
+    public (bool Success, string Message) ProcessOrder(Product p) {
+        if (p.Price > 0) return (true, $"Ordered {p.Name}");
+        else return (false, "Invalid price");
+    }
+}
+
+// Using a Lambda Expression to pass behavior.
+public delegate void Notifier(string message);
+public class EventPublisher {
+    public void RaiseEvent(Notifier notifier) {
+        notifier("Something happened!"); // Invoking behavior passed as an argument
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>It's like trying to build a LEGO set without using the standard bricks. You could use smaller components, tape, or glue, but you wouldn't be building with LEGOs. While you might achieve a similar-looking result, you lose the modularity, interlocking stability, and ease of assembly that the standard brick (class) provides. Records are like specialized LEGO bricks designed specifically for holding data.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Traditional Class-Based OOP</th><th>Alternative Approaches in C#</th></tr></thead>
+                    <tbody>
+                        <tr><td>Definition</td><td>Explicit <code>class MyClass { ... }</code> definition.</td><td>Implicit via record, struct, or types inferred from lambdas/tuples.</td></tr>
+                        <tr><td>State Management</td><td>Clear separation of public interface and private state.</td><td>State can be more exposed (e.g., tuples) or implicitly managed (e.g., records).</td></tr>
+                        <tr><td>Behavior Binding</td><td>Methods are defined within the class.</td><td>Behavior is often decoupled and passed around as delegates or functions.</td></tr>
+                        <tr><td>Inheritance</td><td>Full support for class inheritance hierarchies.</td><td>Limited; records can inherit from other records, but it's less common.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Conciseness:</strong> Records and tuples reduce boilerplate code, making the intent clearer for simple data containers.</li>
+                    <li><strong>Immutability:</strong> Records promote immutable-by-default designs, which are safer and easier to reason about.</li>
+                    <li><strong>Flexibility:</strong> Allows mixing OOP with functional styles, enabling more expressive and composable code.</li>
+                    <li><strong>Performance:</strong> Tuples and structs can offer better performance for simple data groups due to stack allocation and lack of heap indirection.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>The question likely expects a "no" as the primary answer, as classes are the bedrock of C# OOP. Alternatives are supplementary.</li>
+                    <li>Confusing a record with a simple struct. A record is a reference type with value semantics, while a struct is a value type.</li>
+                    <li>Not realizing that even with records or tuples, the underlying system still relies on type definitions, just generated by the compiler automatically.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>No, true OOP in C# fundamentally requires classes or structs as the core construct.</li>
+                    <li>Records are a modern, concise alternative for creating immutable data objects.</li>
+                    <li>Tuples and lambdas allow for some OOP-like patterns (data grouping, behavior-as-data) without explicit classes.</li>
+                    <li>All types ultimately derive from the <code>object</code> class, ensuring a baseline level of OOP capability.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 7 ============ -->
+        <article class="question-card" data-question-id="7">
+            <h2 class="question-title">7. What is encapsulation? How does it improve software design?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-7">Show answer</button>
+            <div id="answer-7" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Encapsulation is the principle of bundling data (fields/attributes) and the methods (functions/procedures) that operate on that data within a single unit, typically a class or struct. It improves software design by controlling access to an object's internal state, preventing external code from directly modifying it in invalid ways. This is primarily achieved in C# using access modifiers like <code>private</code>.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Access Modifiers:</strong> Keywords that control the visibility of types and members.
+                        <ul>
+                            <li><code>private</code>: Access is limited to the containing type.</li>
+                            <li><code>public</code>: Access is unlimited.</li>
+                            <li><code>internal</code>: Access is limited to the current assembly.</li>
+                            <li><code>protected</code>: Access is limited to the containing class and its derived classes.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Properties:</strong> A language construct that provides a controlled way to read, write, or compute the value of a private field. They act as an interface to the private data.</li>
+                    <li><strong>Backing Fields:</strong> A private field that a property uses to store its value. Properties often expose this internal data safely.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class BankAccount {
+    // 1. Private field - the data is encapsulated inside the class.
+    private decimal _balance;
+
+    // 2. Public Property - provides a controlled interface to the private field.
+    public decimal Balance {
+        // 3. Getter accessor: Allows reading the balance.
+        get => _balance;
+        // 4. Setter accessor: Allows setting the balance with validation.
+        set {
+            if (value >= 0) _balance = value;
+            else throw new ArgumentException("Balance cannot be negative.");
+        }
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A vending machine. The coins and drinks inside are the data (private fields). You cannot reach in and grab them directly. Instead, you interact with the machine through its interface (buttons and display), which controls the internal mechanisms. This ensures you can only buy a drink if you insert enough money, encapsulating the complex logic of payment and dispensing.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Encapsulation vs. Abstraction:</strong> Encapsulation is about how to implement the bundling and access control (hiding the implementation). Abstraction is about what information to show (hiding the complex reality). Encapsulation is a tool to achieve abstraction.</li>
+                    <li><strong>Fields vs. Properties:</strong> A field is a simple data container. A property is a smarter container that adds logic (get/set accessors) around accessing the data, which is the essence of encapsulation.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Data Integrity:</strong> By placing validation logic inside property setters, you ensure that an object's state is always valid, preventing bugs.</li>
+                    <li><strong>Maintainability:</strong> If the internal representation of data needs to change (e.g., from inches to centimeters), you can modify the private field and property logic in one place without affecting the code that uses the public property interface.</li>
+                    <li><strong>Security:</strong> Prevents malicious or accidental corruption of an object's data from outside the class.</li>
+                    <li><strong>When to Use:</strong> Apply encapsulation to all data members of a class. Make fields <code>private</code> and expose them via <code>public</code> properties whenever possible.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Creating classes with public fields instead of properties, which breaks encapsulation and makes the code brittle. This is a classic sign of poor design.</li>
+                    <li>Forgetting to add validation logic in a property setter, defeating the purpose of using a property over a public field.</li>
+                    <li>Applying access modifiers incorrectly, such as making a crucial data member <code>public</code> when it should be <code>private</code>.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Encapsulation = Data Hiding + Controlled Access.</li>
+                    <li>Goal: Protect an object's internal state.</li>
+                    <li>Mechanism: Use <code>private</code> fields and <code>public</code> properties with <code>get</code>/<code>set</code> accessors.</li>
+                    <li>Benefit: Ensures data integrity and improves maintainability.</li>
+                    <li>Analogy: A vending machine or a bank account API.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 8 ============ -->
+        <article class="question-card" data-question-id="8">
+            <h2 class="question-title">8. What is abstraction in OOP? How does it help?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-8">Show answer</button>
+            <div id="answer-8" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Abstraction is the process of hiding complex implementation details and exposing only the essential features of an object or system. It helps by reducing complexity, allowing developers to focus on what an object does rather than how it does it. This separation of concerns makes software easier to design, build, and maintain. In C#, abstraction is a core principle of object-oriented programming.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Abstract Classes:</strong> Classes declared with the <code>abstract</code> keyword that cannot be instantiated. They are meant to be inherited and can contain abstract methods (without a body) and concrete methods (with a body).</li>
+                    <li><strong>Interfaces:</strong> A contract that defines a set of methods, properties, events, or indexes that a class must implement. Declared with the <code>interface</code> keyword.</li>
+                    <li><strong>Virtual Methods:</strong> Methods in a base class declared with the <code>virtual</code> keyword that can be overridden in a derived class, providing a form of run-time abstraction.</li>
+                    <li><strong><code>partial</code> Keyword:</strong> Allows a class, struct, or interface to be split across multiple source files, which can be seen as a form of source-code abstraction.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// 1. An abstract base class 'Shape' provides an abstraction for all shapes.
+public abstract class Shape {
+    // Abstract method - forces derived classes to provide their own implementation.
+    public abstract decimal CalculateArea();
+
+    // Concrete method - provides a shared implementation.
+    public void Print() => Console.WriteLine("This is a shape.");
+}
+
+// 2. A concrete class 'Circle' implements the abstraction.
+public class Circle : Shape {
+    private decimal _radius;
+    public Circle(decimal radius) => _radius = radius;
+
+    // 3. Must implement the abstract method from the base class.
+    public override decimal CalculateArea() => (decimal)Math.PI * _radius * _radius;
+}
+
+class Program {
+    static void Main() {
+        // 4. Client code uses the abstraction, not the concrete implementation.
+        Shape myShape = new Circle(5);
+        myShape.Print(); // Calls the concrete method.
+        Console.WriteLine(myShape.CalculateArea()); // Calls the Circle-specific implementation.
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A car's dashboard. The gauges and buttons are the abstract interface. You don't need to understand the intricate details of the engine, transmission, or fuel injection system (the implementation). You just need to know that pressing the brake pedal stops the car. The dashboard provides the perfect abstraction, hiding immense complexity behind simple controls.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Abstraction</th><th>Encapsulation</th><th>Information Hiding</th></tr></thead>
+                    <tbody>
+                        <tr><td>Primary Goal</td><td>To reduce complexity by focusing on essential features.</td><td>To bundle data and methods and control access to them.</td><td>To restrict access to parts of a system.</td></tr>
+                        <tr><td>Mechanism</td><td>Abstract classes, interfaces, virtual methods.</td><td>Access modifiers (private, public), properties.</td><td>A broader concept that includes encapsulation.</td></tr>
+                        <tr><td>Relationship</td><td>Abstraction tells you what to do. Encapsulation tells you how to do it safely.</td><td>Encapsulation is a technique used to achieve abstraction.</td><td>Information hiding is a principle that encompasses encapsulation.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Manage Complexity:</strong> Allows developers to work with high-level concepts (e.g., <code>ILogger</code>) without worrying about the low-level details (e.g., file I/O vs. database logging).</li>
+                    <li><strong>Loose Coupling:</strong> High-level modules depend on abstractions (interfaces/abstract classes), not low-level details. This makes the system more flexible and easier to modify.</li>
+                    <li><strong>Reusability:</strong> Abstracted components can be reused in different contexts. A logging abstraction can be swapped with a different logging provider easily.</li>
+                    <li><strong>When to Use:</strong> Use abstraction whenever you have a common concept that can have multiple implementations (e.g., <code>IDatabaseConnection</code>, <code>IPaymentGateway</code>). Use abstract classes for base functionality and contracts.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing abstraction with encapsulation. Abstraction is about what to show; encapsulation is about how to hide it securely.</li>
+                    <li>Not understanding that an abstract class can have both abstract and non-abstract members, while an interface in older C# versions could only have signatures.</li>
+                    <li>Thinking that all classes with private members are abstract. Abstraction is about defining contracts and hiding complexity, not just about access modifiers.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Abstraction = "What" (interface) vs. "How" (implementation).</li>
+                    <li>Tools: <code>abstract</code> classes and <code>interface</code>s.</li>
+                    <li>Benefit: Reduces complexity and promotes loose coupling.</li>
+                    <li>Analogy: The car's dashboard hides the engine's complexity.</li>
+                    <li>Example: <code>Shape</code> class with <code>CalculateArea()</code> abstract method.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 9 ============ -->
+        <article class="question-card" data-question-id="9">
+            <h2 class="question-title">9. Explain polymorphism with a real-world example.</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-9">Show answer</button>
+            <div id="answer-9" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Polymorphism is the ability for an object to take on many forms. In OOP, it most commonly refers to a single interface being used to represent multiple underlying implementations. This allows a single method call to behave differently depending on the actual object it is invoked on at runtime. In C#, polymorphism is primarily achieved through method overriding with <code>virtual</code> and <code>override</code> keywords and through interfaces.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong><code>virtual</code> keyword:</strong> Used in a base class to modify a method, property, indexer, or event, indicating that it can be overridden in a derived class.</li>
+                    <li><strong><code>override</code> keyword:</strong> Used in a derived class to provide a new implementation for a <code>virtual</code> member from the base class.</li>
+                    <li><strong><code>base</code> keyword:</strong> Used within an <code>override</code> method to call the base class's implementation of the virtual member.</li>
+                    <li><strong>Interfaces:</strong> A type that defines a contract. A class implementing an interface provides its own implementation of the interface's members, demonstrating another form of polymorphism.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// Base class with a virtual method.
+public class Animal {
+    public virtual void MakeSound() => Console.WriteLine("Some generic animal sound");
+}
+
+// Derived classes that override the virtual method.
+public class Dog : Animal {
+    public override void MakeSound() => Console.WriteLine("Woof!");
+}
+
+public class Cat : Animal {
+    public override void MakeSound() => Console.WriteLine("Meow!");
+}
+
+class Program {
+    static void Main() {
+        // An array of Animal references, but they point to Dog and Cat objects.
+        Animal[] animals = { new Dog(), new Cat() };
+
+        // The SAME method call produces DIFFERENT results based on the ACTUAL object type.
+        foreach (Animal animal in animals) {
+            animal.MakeSound(); // Output: "Woof!", then "Meow!"
+        }
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A music player remote control. The "Play/Pause" button is a single interface. Pressing it on a CD player starts the motor, on a cassette player moves the heads, and on a digital stream connects to a server. The action (play/pause) is the same, but the behavior (the underlying implementation) is completely different for each device. The remote provides a polymorphic interface to various media players.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Method Overriding (Runtime Polymorphism):</strong> The decision of which method to call is made at runtime based on the object's actual type. This is true polymorphism in C#.</li>
+                    <li><strong>Method Overloading (Compile-Time Polymorphism):</strong> Multiple methods in the same scope have the same name but different signatures (parameters). The compiler decides which one to call at compile time. This is not the same as the polymorphism discussed in the four pillars.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Flexibility:</strong> Allows you to write generic code that can operate on objects of different types through a common base class or interface. For example, a method that accepts a list of <code>Animal</code> can process any type of animal.</li>
+                    <li><strong>Extensibility:</strong> New types can be added to the system (e.g., a new <code>Bird</code> class) without changing existing client code that works with the base <code>Animal</code> type.</li>
+                    <li><strong>Readability:</strong> Code becomes cleaner and easier to follow because you don't need numerous <code>if/else</code> or <code>switch</code> statements to check an object's type before calling a method.</li>
+                    <li><strong>When to Use:</strong> Use method overriding wherever you have a base class defining a general behavior that derived classes need to specialize.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing method overloading with method overriding. Overloading is resolved at compile-time; overriding is resolved at runtime.</li>
+                    <li>Forgetting to mark a base class method with <code>virtual</code> before you can <code>override</code> it in a derived class. The compiler will give an error.</li>
+                    <li>Calling an overridden method from a constructor can lead to unexpected behavior if the derived class's state isn't fully initialized yet.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Poly means many, and morph means form -> Many Forms.</li>
+                    <li>Runtime Polymorphism in C# is achieved with <code>virtual</code>/<code>override</code>.</li>
+                    <li>The <code>base</code> keyword calls the parent's overridden implementation.</li>
+                    <li>Interface implementation is another major form of polymorphism.</li>
+                    <li>Analogy: A remote control with the same button doing different things for different devices.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 10 ============ -->
+        <article class="question-card" data-question-id="10">
+            <h2 class="question-title">10. What is inheritance? How does it work in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-10">Show answer</button>
+            <div id="answer-10" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Inheritance is a mechanism in OOP that allows a new class to inherit the fields, properties, and methods of an existing class. This promotes code reuse and establishes a natural hierarchical relationship between classes, often described as an "is-a" relationship. In C#, a class can inherit from only one other class (single inheritance), but it can implement multiple interfaces.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong><code>:</code> (Colon) Operator:</strong> Used to signify inheritance. <code>class Dog : Animal</code> means Dog inherits from Animal.</li>
+                    <li><strong>Base Class/Superclass:</strong> The class being inherited from (e.g., <code>Animal</code>).</li>
+                    <li><strong>Derived Class/Subclass:</strong> The class that inherits (e.g., <code>Dog</code>).</li>
+                    <li><strong><code>base</code> Keyword:</strong> Used in a derived class constructor to call a specific constructor of the base class. Also used in methods to call a hidden base class member.</li>
+                    <li><strong><code>sealed</code> Keyword:</strong> Can be applied to a class to prevent it from being inherited further.</li>
+                    <li><strong>Single Inheritance:</strong> C# does not support inheriting from multiple classes directly, unlike C++. This avoids the "diamond problem".</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>// Base class.
+public class Vehicle {
+    public string Brand { get; set; }
+    public Vehicle(string brand) => Brand = brand;
+    public void StartEngine() => Console.WriteLine($"{Brand} engine started");
+}
+
+// Derived class inheriting from Vehicle.
+public class Car : Vehicle {
+    public int NumberOfDoors { get; set; }
+
+    // Constructor chaining: Calling the base class constructor.
+    public Car(string brand, int doors) : base(brand) {
+        NumberOfDoors = doors;
+    }
+
+    // New method specific to Car.
+    public void Honk() => Console.WriteLine("Beep beep!");
+}
+
+class Program {
+    static void Main() {
+        Car myCar = new Car("Toyota", 4);
+        myCar.StartEngine(); // Inherited method from Vehicle.
+        myCar.Honk();        // Specific method from Car.
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A family tree. Grandparents (base class) have certain traits. Parents (derived class) inherit those traits but can also have their own unique traits. Children (further derived class) inherit from parents and can add more traits. This hierarchical structure mirrors class inheritance.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Inheritance</th><th>Interfaces</th><th>Composition</th></tr></thead>
+                    <tbody>
+                        <tr><td>Relationship</td><td>"Is-a" relationship (a Car is a Vehicle).</td><td>"Can-do" relationship (an ICooker can cook).</td><td>"Has-a" relationship (a Car has an Engine).</td></tr>
+                        <tr><td>Implementation</td><td>Inherits and extends the implementation of a class.</td><td>Only defines a contract (signatures) for implementation.</td><td>Contains an instance of another class as a field.</td></tr>
+                        <tr><td>Multiple Inheritance</td><td>Not supported for classes in C#.</td><td>A class can implement multiple interfaces.</td><td>Supported naturally by having multiple object fields.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Code Reusability:</strong> Avoids rewriting common functionality. Base classes can hold shared logic.</li>
+                    <li><strong>Establishing Hierarchies:</strong> Creates a logical and organized structure for related classes (e.g., geometric shapes, different types of employees).</li>
+                    <li><strong>Polymorphism:</strong> Forms the foundation for runtime polymorphism via <code>virtual</code> and <code>override</code> methods.</li>
+                    <li><strong>When to Use:</strong> Use inheritance when there is a clear "is-a" relationship and you genuinely want to extend or specialize the behavior of a base class.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>The "fragile base class problem": Changing a base class can unexpectedly break all derived classes. Favor composition over inheritance when possible.</li>
+                    <li>Inheriting from a <code>sealed</code> class is impossible.</li>
+                    <li>C# only supports single inheritance for classes, but multiple inheritance is possible via interfaces.</li>
+                    <li>Constructor chaining: A derived class constructor must explicitly call a base class constructor using <code>: base(...)</code>.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Mechanism: <code>class Dog : Animal</code>.</li>
+                    <li>Relationship: "Is-a" (a Dog is an Animal).</li>
+                    <li>Rule: C# supports single inheritance for classes.</li>
+                    <li>Keyword: <code>base</code> is used to access the base class from a derived class.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 11 ============ -->
+        <article class="question-card" data-question-id="11">
+            <h2 class="question-title">11. What is the Object class in C#? Why is it important?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-11">Show answer</button>
+            <div id="answer-11" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>The Object class is the ultimate base class for all other classes in C#. Every type in the .NET Framework, whether it's a reference type (class, array, delegate) or a value type (struct, enum), implicitly inherits from System.Object. This means that every object in C# possesses the members defined by the Object class, which provides fundamental functionality like type identification, comparison, and string representation.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Implicit Inheritance:</strong> All classes, even custom ones, implicitly inherit from <code>Object</code>. You do not write <code>: Object</code> in your class definition.</li>
+                    <li><strong><code>ToString()</code> Method:</strong> A virtual method inherited by all objects that returns a string representation of the object. By default, it returns the full type name, but it is commonly overridden to provide a meaningful string representation.</li>
+                    <li><strong><code>Equals()</code> Method:</strong> A virtual method used to compare two objects for equality. The default implementation compares references for reference types, but it can be overridden to provide value-based equality.</li>
+                    <li><strong><code>GetHashCode()</code> Method:</strong> A method that returns a hash code for the object. It is crucial for objects used in hash-based collections like <code>Dictionary</code> and <code>HashSet</code>. Its contract with <code>Equals()</code> is critical: if two objects are equal, they must return the same hash code.</li>
+                    <li><strong><code>GetType()</code> Method:</strong> Returns a <code>Type</code> object that contains metadata about the object's runtime type.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Point {
+    public int X, Y;
+    public Point(int x, int y) => (X, Y) = (x, y);
+}
+
+class Program {
+    static void Main() {
+        Point p1 = new Point(10, 20);
+        object obj = p1; // Implicit boxing? Actually Point is class, so it's a reference.
+
+        // All of these methods are available because 'p1' inherits from Object.
+        Console.WriteLine(p1.ToString()); // Output: "Point" (default ToString)
+        Console.WriteLine(obj.GetType()); // Output: "Point" (runtime type)
+
+        Point p2 = new Point(10, 20);
+        Console.WriteLine(p1.Equals(p2)); // Output: False (compares references)
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>The Object class is like a universal power strip adapter. Any electrical device (any .NET type) can plug into it, giving it access to fundamental power-related functions (like turning on/off, checking voltage). Even if a device has its own specialized plug, it can always connect to the universal adapter, ensuring a baseline level of functionality.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Object Class</th><th>ValueType / Enum</th><th>Custom Base Class</th></tr></thead>
+                    <tbody>
+                        <tr><td>Inheritance</td><td>Ultimate root of the inheritance chain for all .NET types.</td><td>ValueType itself inherits from Object.</td><td>Can be a custom class, but it must eventually inherit from Object.</td></tr>
+                        <tr><td>Memory</td><td>Reference type. Objects live on the heap.</td><td>Value types live on the stack or inline.</td><td>N/A</td></tr>
+                        <tr><td>Default Members</td><td>Provides ToString, Equals, GetHashCode, GetType.</td><td>Inherit these methods from Object. Can be overridden.</td><td>Inherit these methods from Object.</td></tr>
+                        <tr><td>Usage</td><td>Cannot be instantiated directly. Serves as a foundation.</td><td>A subclass of Object that follows specific rules (e.g., cannot have a null value).</td><td>A regular class that serves as a base for other classes.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Universal Functionality:</strong> Guarantees that every object in the system has a basic set of capabilities for introspection, comparison, and string conversion.</li>
+                    <li><strong>Reflection Support:</strong> <code>GetType()</code> is the entry point for reflection, allowing programs to inspect their own metadata at runtime.</li>
+                    <li><strong>Generic Constraints:</strong> Allows for writing generic methods that can work with any type, including constraining a generic parameter to be a class that inherits from <code>Object</code> (which is all of them).</li>
+                    <li><strong>When to Use:</strong> You don't "use" the <code>Object</code> class directly. You use the methods it provides on your own objects. You should override <code>ToString()</code>, <code>Equals()</code>, and <code>GetHashCode()</code> in your custom classes to provide meaningful implementations.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing the <code>Object</code> class with a class you define yourself. <code>Object</code> is a special, built-in class.</li>
+                    <li>Not understanding the contract between <code>Equals()</code> and <code>GetHashCode()</code>. Violating this contract will cause unpredictable behavior in hash-based collections.</li>
+                    <li>Forgetting that value types (structs) also inherit from <code>Object</code>, though they are boxed when cast to <code>Object</code>.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Ultimate Base Class: All .NET types inherit from <code>System.Object</code>.</li>
+                    <li>Provides Core Methods: <code>ToString()</code>, <code>Equals()</code>, <code>GetHashCode()</code>, <code>GetType()</code>.</li>
+                    <li>Enables Polymorphism: Allows heterogeneous collections (e.g., <code>List&lt;object&gt;</code>) and reflection.</li>
+                    <li>Value Types: Structs also inherit from <code>Object</code> but are boxed when cast to it.</li>
+                    <li>Override for Meaning: Always override <code>ToString()</code> and consider overriding <code>Equals()</code> and <code>GetHashCode()</code> in your custom classes.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 12 ============ -->
+        <article class="question-card" data-question-id="12">
+            <h2 class="question-title">12. What are the key methods of the Object class? (e.g., ToString(), Equals(), GetHashCode())</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-12">Show answer</button>
+            <div id="answer-12" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>The System.Object class provides four key virtual methods that are inherited by all types in C#: ToString(), Equals(), GetHashCode(), and GetType(). These methods provide fundamental capabilities for converting objects to strings, comparing objects for equality, generating hash codes for use in collections, and retrieving type information at runtime.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong><code>ToString()</code>:</strong> A <code>virtual</code> method that returns a string representation of an object. It should be overridden to provide a human-readable description of the object's state.</li>
+                    <li><strong><code>Equals(object obj)</code>:</strong> A <code>virtual</code> method that determines whether two <code>Object</code> instances are equal. The default implementation performs reference equality for reference types. It should be overridden for value equality.</li>
+                    <li><strong><code>GetHashCode()</code>:</strong> A method that returns an integer hash code for the object. Its implementation must be consistent with the <code>Equals()</code> method: if two objects are equal, they must return the same hash code.</li>
+                    <li><strong><code>GetType()</code>:</strong> An <code>inherited</code> method (not virtual) that returns a <code>Type</code> object representing the exact runtime type of the instance.</li>
+                    <li><strong><code>object</code> Type:</strong> The base type for all other types, so these methods are universally accessible.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Person {
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public Person(string name, int age) => (Name, Age) = (name, age);
+
+    // 1. Override ToString() for a meaningful string representation.
+    public override string ToString() => $"{Name}, {Age} years old";
+
+    // 2. Override Equals() for value-based comparison.
+    public override bool Equals(object obj) {
+        if (obj is Person other)
+            return Name == other.Name && Age == other.Age;
+        return false;
+    }
+
+    // 3. Override GetHashCode() consistently with Equals().
+    public override int GetHashCode() => HashCode.Combine(Name, Age);
+}
+
+class Program {
+    static void Main() {
+        Person p1 = new Person("Alice", 30);
+        Person p2 = new Person("Alice", 30);
+        Console.WriteLine(p1.ToString());   // Output: "Alice, 30 years old"
+        Console.WriteLine(p1.Equals(p2));   // Output: True (value equality)
+        Console.WriteLine(p1.GetHashCode()); // Output: A hash code based on Name and Age
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Think of a driver's license. <code>ToString()</code> is like the summary information printed on the front (name, license number). <code>Equals()</code> is like verifying the person's identity by checking multiple pieces of data (photo, signature, birthdate). <code>GetHashCode()</code> is like assigning a unique security code to the license for quick filing. <code>GetType()</code> is like the official classification of the license (e.g., "Class D Driver's License").</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Method</th><th>Default Behavior</th><th>Typical Override Purpose</th><th>Contract/Constraint</th></tr></thead>
+                    <tbody>
+                        <tr><td>ToString()</td><td>Returns the full type name.</td><td>To provide a human-readable string representation of the object's state.</td><td>None. Safe to override freely.</td></tr>
+                        <tr><td>Equals()</td><td>For reference types, returns true only if both variables refer to the same object.</td><td>To compare the values of the objects' fields/properties (value equality).</td><td>If a.Equals(b) is true, then a.GetHashCode() must equal b.GetHashCode().</td></tr>
+                        <tr><td>GetHashCode()</td><td>Returns a unique integer for each object instance, often based on its memory address.</td><td>To return a consistent integer based on the object's value, for efficient lookup in hash tables.</td><td>Must be consistent with Equals().</td></tr>
+                        <tr><td>GetType()</td><td>Not virtual. Always returns the precise runtime type of the object.</td><td>Rarely overridden. It's the definitive source of type information.</td><td>None.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Debugging & Logging:</strong> <code>ToString()</code> is invaluable for debugging and logging, as it provides a quick snapshot of an object's state.</li>
+                    <li><strong>Flexible Comparison:</strong> <code>Equals()</code> allows for both reference and value comparisons, making code more robust.</li>
+                    <li><strong>High-Performance Collections:</strong> A good <code>GetHashCode()</code> implementation is critical for the performance of <code>Dictionary</code> and <code>HashSet</code>. A bad one can degrade performance to that of a list.</li>
+                    <li><strong>Runtime Type Safety:</strong> <code>GetType()</code> is essential for safe casting and for implementing algorithms that need to behave differently based on an object's exact type.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Violating the <code>GetHashCode</code> contract: Returning a constant value (e.g., <code>return 1;</code>) will make <code>Dictionary</code> work but will be extremely slow. Conversely, returning a value based on mutable data will break the dictionary.</li>
+                    <li>Forgetting to handle <code>null</code> and incorrect types: A robust <code>Equals</code> override checks for <code>null</code> first and uses <code>is</code> pattern matching to check the type safely.</li>
+                    <li>Not overriding <code>GetHashCode</code> when overriding <code>Equals</code>: If you override <code>Equals</code> for value comparison, you almost always must also override <code>GetHashCode</code> to be consistent.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Methods: <code>ToString()</code>, <code>Equals(object)</code>, <code>GetHashCode()</code>, <code>GetType()</code>.</li>
+                    <li><code>ToString</code>: Override for a readable string output.</li>
+                    <li><code>Equals</code>: Override for value comparison, not reference comparison.</li>
+                    <li><code>GetHashCode</code>: Override only if you override <code>Equals</code>, and make it consistent with <code>Equals</code>.</li>
+                    <li>Contract: Equal objects must have the same hash code.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 13 ============ -->
+        <article class="question-card" data-question-id="13">
+            <h2 class="question-title">13. How does method overriding work in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-13">Show answer</button>
+            <div id="answer-13" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Method overriding in C# is a mechanism that allows a derived class to provide a specific implementation of a method that is already defined in its base class. The method in the base class must be marked with the <code>virtual</code> keyword, and the overriding method in the derived class must use the <code>override</code> keyword. This enables runtime polymorphism, where the correct method version is determined by the actual object type at runtime, not the variable type.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong><code>virtual</code> modifier:</strong> Used in a base class to indicate that a method, property, indexer, or event can be overridden by a derived class.</li>
+                    <li><strong><code>override</code> modifier:</strong> Used in a derived class to specify that a member is providing a new implementation for a <code>virtual</code> member from a base class.</li>
+                    <li><strong><code>base</code> keyword:</strong> Allows a derived class to access a hidden base class member, including the original <code>virtual</code> method implementation.</li>
+                    <li><strong><code>new</code> keyword:</strong> Can also be used to hide a base class method, but this is different from overriding. It suppresses the warning but creates two separate methods.</li>
+                    <li><strong>Signature Match:</strong> The <code>override</code> method must have the same signature (name, return type, parameters) as the <code>virtual</code> method it overrides.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Shape {
+    // 1. The base method is declared 'virtual'.
+    public virtual void Draw() => Console.WriteLine("Drawing a generic shape");
+}
+
+public class Circle : Shape {
+    // 2. The derived class provides a new implementation using 'override'.
+    public override void Draw() {
+        Console.WriteLine("Drawing a circle.");
+        base.Draw(); // 3. 'base' can call the base implementation if needed.
+    }
+}
+
+class Program {
+    static void Main() {
+        // 4. Variable is of base type, but refers to a derived object
+        Shape myShape = new Circle();
+        // 5. The runtime system resolves this to the 'override' version
+        myShape.Draw(); // Output: "Drawing a circle. Drawing a generic shape"
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A universal remote control. The "Power" button is a generic command. When pointed at a TV, it turns the TV on. When pointed at a projector, it turns the projector on. The button (method call) is the same, but the action (method implementation) is specific to the device (object type) it's currently operating on.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Feature</th><th>Method Overriding</th><th>Method Hiding (new)</th><th>Method Overloading</th></tr></thead>
+                    <tbody>
+                        <tr><td>Mechanism</td><td>virtual in base, override in derived.</td><td>new keyword in derived.</td><td>Same name, different parameters in the same class.</td></tr>
+                        <tr><td>Binding</td><td>Runtime (dynamic) binding.</td><td>Compile-time binding.</td><td>Compile-time (static) binding.</td></tr>
+                        <tr><td>Polymorphism</td><td>Enables true runtime polymorphism.</td><td>Does not enable polymorphism; creates two separate methods.</td><td>Not a form of polymorphism in this context.</td></tr>
+                        <tr><td>Inheritance Chain</td><td>Forms a single method chain.</td><td>Breaks the chain; the derived method hides the base method.</td><td>Occurs within a single class scope.</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Flexibility:</strong> Allows you to write generic code that can operate on objects of different types through a common base class or interface.</li>
+                    <li><strong>Extensibility:</strong> New types can be added to the system without changing existing client code that works with the base type.</li>
+                    <li><strong>Readability:</strong> Code becomes cleaner and easier to follow because you don't need numerous <code>if/else</code> or <code>switch</code> statements to check an object's type before calling a method.</li>
+                    <li><strong>When to Use:</strong> Use method overriding wherever you have a base class defining a general behavior that derived classes need to specialize.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing method overloading with method overriding. Overloading is resolved at compile-time; overriding is resolved at runtime.</li>
+                    <li>Forgetting to mark a base class method with <code>virtual</code> before you can <code>override</code> it in a derived class. The compiler will give an error.</li>
+                    <li>Calling an overridden method from a constructor can lead to unexpected behavior if the derived class's state isn't fully initialized yet.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Poly means many, and morph means form -> Many Forms.</li>
+                    <li>Runtime Polymorphism in C# is achieved with <code>virtual</code>/<code>override</code>.</li>
+                    <li>The <code>base</code> keyword calls the parent's overridden implementation.</li>
+                    <li>Interface implementation is another major form of polymorphism.</li>
+                    <li>Analogy: A remote control with the same button doing different things for different devices.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 14 ============ -->
+        <article class="question-card" data-question-id="14">
+            <h2 class="question-title">14. Explain the difference between method overloading and method overriding.</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-14">Show answer</button>
+            <div id="answer-14" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p><strong>Method overloading</strong> occurs when multiple methods in the same class have the same name but different parameter lists (different number, types, or order). <strong>Method overriding</strong> occurs when a derived class provides a specific implementation of a method that is already defined in its base class, using the <code>override</code> keyword. Overloading is compile-time polymorphism; overriding is runtime polymorphism.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Overloading:</strong> Methods can be overloaded within the same class or across derived classes (if not hidden). The compiler selects the correct method based on the arguments at compile time.</li>
+                    <li><strong>Overriding:</strong> Requires <code>virtual</code> in base and <code>override</code> in derived. The method signature must be identical (including return type).</li>
+                    <li><strong><code>new</code> keyword:</strong> Used to hide a base method without overriding, which is different from both overloading and overriding.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Calculator {
+    // Overloading: same name, different parameters.
+    public int Add(int a, int b) => a + b;
+    public double Add(double a, double b) => a + b;
+    public int Add(int a, int b, int c) => a + b + c;
+}
+
+public class Animal {
+    public virtual void Speak() => Console.WriteLine("Animal speaks");
+}
+
+public class Dog : Animal {
+    // Overriding: same signature, different implementation.
+    public override void Speak() => Console.WriteLine("Dog barks");
+}
+
+class Program {
+    static void Main() {
+        Calculator calc = new Calculator();
+        Console.WriteLine(calc.Add(2, 3));       // calls int version
+        Console.WriteLine(calc.Add(2.5, 3.7));   // calls double version
+
+        Animal a = new Dog();
+        a.Speak(); // Output: Dog barks (runtime polymorphism)
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p><strong>Overloading</strong> is like a chef who can prepare "pasta" in different ways: with marinara sauce, with alfredo sauce, or with vegetables. The name "pasta" is the same, but the ingredients (parameters) differ. <strong>Overriding</strong> is like a family recipe for "holiday dinner" – each generation (derived class) may prepare it slightly differently, but the occasion (method call) remains the same.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <table style="border:1px solid #ccc; border-collapse:collapse; width:100%;">
+                    <thead><tr><th>Aspect</th><th>Method Overloading</th><th>Method Overriding</th></tr></thead>
+                    <tbody>
+                        <tr><td>Purpose</td><td>To provide multiple ways to call a method with different inputs.</td><td>To change the behavior of a base class method in a derived class.</td></tr>
+                        <tr><td>Scope</td><td>Same class or derived classes (via hiding).</td><td>Between base class and derived class.</td></tr>
+                        <tr><td>Binding</td><td>Compile-time (static).</td><td>Runtime (dynamic).</td></tr>
+                        <tr><td>Keywords</td><td>None specifically; just different parameters.</td><td><code>virtual</code> in base, <code>override</code> in derived.</td></tr>
+                        <tr><td>Return Type</td><td>Can be different (but not alone for overloading).</td><td>Must be identical (covariant returns not supported for reference types).</td></tr>
+                    </tbody>
+                </table>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Overloading:</strong> Use to provide convenience and readability (e.g., <code>Console.WriteLine()</code> has many overloads).</li>
+                    <li><strong>Overriding:</strong> Use to implement specialized behavior in derived classes while preserving a common interface.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Confusing the two because both involve methods with the same name.</li>
+                    <li>Thinking overloading can be done across base/derived without <code>new</code> – it's possible but can lead to confusion.</li>
+                    <li>Assuming overriding is possible without <code>virtual</code>/<code>override</code> – it's not; you'll get a warning or error.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Overloading = same name, different parameters (compile time).</li>
+                    <li>Overriding = same signature, different behavior (runtime, requires virtual/override).</li>
+                    <li>Overloading is a way to provide multiple versions; overriding is a way to replace behavior.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 15 ============ -->
+        <article class="question-card" data-question-id="15">
+            <h2 class="question-title">15. What are virtual methods? Why would you use them?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-15">Show answer</button>
+            <div id="answer-15" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A <code>virtual</code> method in C# is a method that is declared with the <code>virtual</code> keyword in a base class, allowing it to be overridden in any derived class. Virtual methods enable polymorphism – the ability to call the most derived implementation based on the actual object type at runtime. They are used to define "default" or "base" behavior that can be extended or replaced by subclasses.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Declared with <code>virtual</code> modifier (cannot be used with <code>static</code>, <code>abstract</code>, or <code>override</code>).</li>
+                    <li>Can have an implementation (body) in the base class.</li>
+                    <li>Derived classes may use <code>override</code> to provide a new implementation, or they may leave it as is.</li>
+                    <li>Properties, indexers, and events can also be virtual.</li>
+                    <li>Virtual methods cannot be private – they need to be accessible to derived classes.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Employee {
+    public string Name { get; set; }
+    public virtual decimal CalculatePay() {
+        // base implementation: assume 40 hours * hourly rate
+        return 40 * 20; // dummy
+    }
+}
+
+public class Manager : Employee {
+    public override decimal CalculatePay() {
+        // managers get a bonus
+        return base.CalculatePay() + 1000;
+    }
+}
+
+class Program {
+    static void Main() {
+        Employee emp = new Employee();
+        Employee mgr = new Manager();
+        Console.WriteLine(emp.CalculatePay()); // base version
+        Console.WriteLine(mgr.CalculatePay()); // Manager's version (polymorphic)
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A "standard operation procedure" document in a company. The base procedure (virtual method) outlines the general steps. Each department (derived class) can override specific steps to suit their needs while keeping the overall process the same.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Virtual vs Abstract:</strong> Virtual has an implementation and is optional to override; abstract has no implementation and must be overridden in a non-abstract derived class.</li>
+                    <li><strong>Virtual vs Non-Virtual:</strong> Non-virtual methods are bound at compile-time; virtual methods are bound at runtime.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Use virtual methods when you want to provide a default behavior that subclasses can optionally modify.</li>
+                    <li>Essential for framework design (e.g., <code>ToString()</code> is virtual).</li>
+                    <li>Enables the Open/Closed Principle – classes are open for extension but closed for modification.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Calling virtual methods in constructors can lead to subtle bugs if the derived class isn't fully initialized.</li>
+                    <li>Forgetting to use <code>override</code> in derived class (instead using <code>new</code>) breaks polymorphism.</li>
+                    <li>Marking a method as <code>virtual</code> unnecessarily can be a design smell if it's not meant to be overridden.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li><code>virtual</code> = "I have a default implementation, but you can change it."</li>
+                    <li>Requires <code>override</code> in derived class to actually change behavior.</li>
+                    <li>Enables runtime polymorphism.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 16 ============ -->
+        <article class="question-card" data-question-id="16">
+            <h2 class="question-title">16. How do virtual, override, and new keywords work in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-16">Show answer</button>
+            <div id="answer-16" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p><code>virtual</code>, <code>override</code>, and <code>new</code> control member inheritance and binding. <code>virtual</code> marks a method as overridable. <code>override</code> replaces a base virtual method with a new implementation. <code>new</code> hides a base member (non-virtual or virtual) without overriding it, creating a separate member.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><code>virtual</code> can be applied to methods, properties, indexes, and events.</li>
+                    <li><code>override</code> must match the signature of a <code>virtual</code>, <code>abstract</code>, or <code>override</code> method.</li>
+                    <li><code>new</code> suppresses the compiler warning about hiding an inherited member.</li>
+                    <li><code>sealed override</code> prevents further overriding of an overridden method.</li>
+                    <li><code>base.Member</code> accesses the hidden base member from within the derived class.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Base {
+    public virtual void VirtualMethod() => Console.WriteLine("Base.Virtual");
+    public void NonVirtualMethod() => Console.WriteLine("Base.NonVirtual");
+}
+
+public class Derived : Base {
+    public override void VirtualMethod() => Console.WriteLine("Derived.Override");
+    public new void NonVirtualMethod() => Console.WriteLine("Derived.New");
+}
+
+// Usage
+Base b = new Derived();
+b.VirtualMethod();     // "Derived.Override" - late binding
+b.NonVirtualMethod();  // "Base.NonVirtual" - early binding (type is Base)
+
+Derived d = new Derived();
+d.VirtualMethod();     // "Derived.Override"
+d.NonVirtualMethod();  // "Derived.New" - early binding (type is Derived)</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p><code>virtual/override</code> is like a company policy (WorkFromHome()) that departments can adapt (Engineering says "Yes", Sales says "Only Tuesdays"). <code>new</code> is like a department creating its own WorkFromHome() policy that ignores the corporate one—confusing employees who expect consistency.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>override vs new:</strong> <code>override</code> changes behavior for all references to the object; <code>new</code> only affects references typed as the derived class.</li>
+                    <li><strong>virtual vs abstract:</strong> <code>virtual</code> provides a default; <code>abstract</code> demands implementation.</li>
+                    <li><strong>sealed override:</strong> Allows inheritance but locks a method—e.g., <code>Stop()</code> in <code>ElectricCar</code> is final.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><code>virtual/override</code>: Standard for extensible frameworks and libraries.</li>
+                    <li><code>new</code>: Rare—only when you must provide a completely different behavior and accept the loss of polymorphism.</li>
+                    <li><code>sealed override</code>: Security-critical methods that must not be customized (e.g., cryptographic operations).</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Using <code>new</code> when you mean <code>override</code>—breaks polymorphism and is a top exam trap.</li>
+                    <li>Forgetting <code>virtual</code> on the base method—<code>override</code> won't compile.</li>
+                    <li>Assuming <code>new</code> is "safer"—it's more dangerous because it breaks expectations.</li>
+                    <li>Confusing <code>new</code> (hiding) with <code>new()</code> (instantiation)—completely different concepts.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li><code>virtual</code> + <code>override</code> = Polymorphism—the golden path for extensibility.</li>
+                    <li><code>new</code> = Hiding—avoid unless you have a documented, justified reason.</li>
+                    <li><code>sealed override</code> = "Cap the hierarchy"—prevents further customization of a critical method.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 17 ============ -->
+        <article class="question-card" data-question-id="17">
+            <h2 class="question-title">17. What is a constructor in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-17">Show answer</button>
+            <div id="answer-17" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A constructor in C# is a special method that is automatically invoked when an object of a class or struct is created using the <code>new</code> operator. Its primary purpose is to initialize the object's state, ensuring it starts in a valid and consistent condition. Constructors have the same name as their containing type and do not have a return type—not even <code>void</code>.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Constructors are called before the object reference is assigned to a variable.</li>
+                    <li>If no constructor is defined, the compiler provides a parameterless default constructor.</li>
+                    <li><code>this(...)</code> and <code>base(...)</code> enable constructor chaining.</li>
+                    <li><code>static</code> constructors initialize static members and run once per type.</li>
+                    <li>Primary constructors (C# 12) allow parameters directly on the class declaration.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class BankAccount {
+    public string AccountNumber { get; init; }
+    public decimal Balance { get; private set; }
+
+    // Primary constructor (C# 12 style) – shown conceptually
+    public BankAccount(string accountNumber) {
+        AccountNumber = accountNumber;
+        Balance = 0m;
+    }
+
+    // Constructor chaining
+    public BankAccount(string accountNumber, decimal initialBalance) : this(accountNumber) {
+        Balance = initialBalance;
+    }
+}
+
+// Usage
+var account1 = new BankAccount("ACC-001");
+var account2 = new BankAccount("ACC-002", 1000m);</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A constructor is like the factory setup process for a new car model. Before the first car rolls off the line, engineers configure the assembly line (initialize defaults), install standard features (set properties), and run diagnostics (validate inputs). Every car (object) produced follows this setup.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Constructor vs Method:</strong> Constructors have no return type and are called automatically; methods must be explicitly invoked.</li>
+                    <li><strong>Instance vs Static Constructor:</strong> Instance constructors run per object; static constructors run once per type, before any instance is created.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Guarantees Initialization: Ensures fields like AccountNumber are never null.</li>
+                    <li>Enforces Invariants: Validate parameters before object creation.</li>
+                    <li>Supports Dependency Injection: Accept services (e.g., ILogger) as parameters.</li>
+                    <li>Enables Immutability: With init properties, constructors set up the initial state safely.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Forgetting that a parameterized constructor removes the default constructor—<code>new BankAccount()</code> fails if only <code>BankAccount(string)</code> is defined.</li>
+                    <li>Using <code>return</code> in a constructor—it's invalid syntax.</li>
+                    <li>Assuming constructors are inherited—they are not; derived classes must define their own.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Constructors ensure objects are born valid—no half-initialized instances.</li>
+                    <li>Primary constructors (C# 12) simplify class definitions.</li>
+                    <li><code>init</code> properties make constructors more flexible.</li>
+                    <li>Constructor chaining (<code>this(...)</code>, <code>base(...)</code>) prevents code duplication.</li>
+                    <li>Static constructors run once and are thread-safe.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 18 ============ -->
+        <article class="question-card" data-question-id="18">
+            <h2 class="question-title">18. Why do we need constructors?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-18">Show answer</button>
+            <div id="answer-18" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Constructors are essential because they guarantee that every object begins its lifecycle in a valid, initialized state. Without them, fields would remain at their default values (0, null, false), potentially leading to NullReferenceException, invalid calculations, or security vulnerabilities. Constructors enforce class invariants, validate inputs, and set up required dependencies.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Fields are automatically initialized to defaults (int → 0, string → null).</li>
+                    <li>Constructors provide meaningful initialization beyond defaults.</li>
+                    <li><code>required</code> modifier (C# 11) forces initialization, working alongside constructors.</li>
+                    <li><code>init</code> properties (C# 9) shift initialization responsibility from constructors to object initializers.</li>
+                    <li>Primary constructors (C# 12) integrate parameters into the class declaration, making intent explicit.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class EmailAddress {
+    public string Address { get; init; }
+
+    // Constructor enforces validity
+    public EmailAddress(string address) {
+        if (!IsValid(address)) throw new ArgumentException("Invalid email");
+        Address = address;
+    }
+
+    private bool IsValid(string address) => address.Contains("@");
+}
+
+// Usage
+var email = new EmailAddress("<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6a3a5b3a496b3aeb7bba6bab3f8b5b9bb">[email&#160;protected]</a>"); // Valid
+// var bad = new EmailAddress("invalid"); // Throws at construction</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A constructor is like the ignition sequence in a jet engine. Before takeoff, systems must be verified (fuel, hydraulics, avionics). The constructor is that sequence—it runs automatically, ensuring the plane (object) is airworthy before it's entrusted to the pilot (developer).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Constructor vs Property Setter:</strong> Constructors run once at birth; setters can be called anytime, potentially breaking invariants.</li>
+                    <li><strong>init vs Constructor:</strong> <code>init</code> allows initialization via object initializers; constructors allow validation and complex setup logic.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Defensive Programming: Validate inputs before object creation.</li>
+                    <li>Dependency Injection: Pass required services (e.g., database context) to ensure functionality.</li>
+                    <li>Immutability: Combine with init properties to create objects that are safe to share and cache.</li>
+                    <li>Framework Integration: ASP.NET Core invokes constructors to resolve dependencies.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Relying on field initializers alone—<code>public string Name = "Unknown";</code> doesn't prevent null.</li>
+                    <li>Performing long-running operations (e.g., DB calls) in constructors—violates SRP and hinders testing.</li>
+                    <li>Forgetting that <code>init</code> properties don't replace constructors—they coexist and complement them.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Constructors prevent invalid objects—a cornerstone of defensive programming.</li>
+                    <li><code>init</code> properties (C# 9+) and <code>required</code> modifier (C# 11) enhance constructor safety.</li>
+                    <li>Primary constructors (C# 12) make initialization intent crystal clear.</li>
+                    <li>Constructors are the first line of defense against NullReferenceException.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 19 ============ -->
+        <article class="question-card" data-question-id="19">
+            <h2 class="question-title">19. What are the different types of constructors in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-19">Show answer</button>
+            <div id="answer-19" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>C# supports several constructor types: parameterless (default), parameterized, copy, static, private, and primary (C# 12). Parameterless constructors initialize objects with defaults; parameterized accept arguments; copy constructors duplicate existing objects; static constructors initialize static members; private constructors restrict instantiation (e.g., for singletons); primary constructors streamline class definitions.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><strong>Parameterless:</strong> Generated automatically if no constructor is defined.</li>
+                    <li><strong>Parameterized:</strong> Defined with parameters; removes the default constructor.</li>
+                    <li><strong>Copy Constructor:</strong> Not built-in—implemented manually (e.g., <code>public Person(Person other)</code>).</li>
+                    <li><strong>Static Constructor:</strong> <code>static Person() { }</code>—runs once, no access modifiers, no parameters.</li>
+                    <li><strong>Private Constructor:</strong> Prevents external instantiation—used in singleton and utility classes.</li>
+                    <li><strong>Primary Constructor:</strong> Parameters on the class declaration (<code>class Person(string Name)</code>).</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Person {
+    public string Name { get; init; }
+    public int Age { get; init; }
+
+    // Primary constructor (C# 12)
+    public Person(string name, int age) {
+        Name = name;
+        Age = age;
+    }
+
+    // Copy constructor
+    public Person(Person other) : this(other.Name, other.Age) { }
+
+    // Static constructor
+    static Person() => Console.WriteLine("Person type loaded");
+
+    // Private constructor (for singleton pattern)
+    private Person() { }
+}
+
+// Usage
+var p1 = new Person("Alice", 30);
+var p2 = new Person(p1); // Copy</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Constructor types are like different factory assembly lines: parameterless is a basic model kit; parameterized is custom-built to spec; copy is a photocopy machine; static is the factory's opening ceremony (runs once); private is a locked R&D lab—only internal processes can use it.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Primary vs Parameterized:</strong> Primary is syntactic sugar—class Person(string Name) is equivalent to class Person with a constructor.</li>
+                    <li><strong>Static vs Instance:</strong> Static runs once per type; instance runs per object.</li>
+                    <li><strong>Private vs Public:</strong> Private prevents <code>new Person()</code> but allows <code>Person.GetInstance()</code>.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Parameterless:</strong> Simple objects with sensible defaults.</li>
+                    <li><strong>Parameterized/Primary:</strong> Enforce required state—no null fields.</li>
+                    <li><strong>Copy:</strong> Cloning objects for undo/redo, state snapshots.</li>
+                    <li><strong>Static:</strong> Initialize loggers, caches, or configuration once.</li>
+                    <li><strong>Private:</strong> Singleton, utility classes (Math, Console).</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Assuming copy constructors are automatic—they must be written manually.</li>
+                    <li>Forgetting that static constructors cannot be called directly or have access modifiers.</li>
+                    <li>Using private constructors without providing a public way to get an instance.</li>
+                    <li>Confusing primary constructors with record syntax—they are distinct features.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Primary constructors (C# 12) are the modern standard for clean, readable class definitions.</li>
+                    <li><code>init</code> properties work with all constructor types.</li>
+                    <li>Static constructors are thread-safe and run before any instance constructor.</li>
+                    <li>Private constructors enable the Singleton pattern.</li>
+                    <li>Records have built-in <code>with</code> expressions—<code>var copy = original with { Name = "New" }</code> replaces copy constructors.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 20 ============ -->
+        <article class="question-card" data-question-id="20">
+            <h2 class="question-title">20. What is the difference between a default constructor and a parameterized constructor?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-20">Show answer</button>
+            <div id="answer-20" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A default constructor is a parameterless constructor that initializes an object with default values (e.g., 0, null, false). A parameterized constructor accepts arguments to initialize the object with specific, provided values. If you define any parameterized constructor, the compiler no longer provides a default constructor automatically.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Default constructor is generated only if no other constructor is defined.</li>
+                    <li>Parameterized constructor requires explicit arguments: <code>new Person("Alice", 30)</code>.</li>
+                    <li><code>init</code> properties allow setting values after a parameterized constructor runs, via object initializers.</li>
+                    <li>Primary constructors (C# 12) are parameterized by definition—class Person(string Name) { }.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Product {
+    public string Name { get; init; }
+    public decimal Price { get; init; }
+
+    // Parameterized constructor
+    public Product(string name, decimal price) {
+        Name = name;
+        Price = price;
+    }
+    // No default constructor – not generated
+}
+
+// Usage
+// var p1 = new Product(); // CS1729: No constructor takes 0 arguments
+var p2 = new Product("Laptop", 999.99m);</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A default constructor is like receiving a blank notebook—you can write anything. A parameterized constructor is like receiving a pre-labeled notebook ("Meeting Notes, Q3 2024")—it's ready to use for its intended purpose. Once you define a labeled notebook, blank ones are no longer available.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Default vs Parameterized:</strong> Default provides safety (no exceptions); parameterized provides correctness (no null fields).</li>
+                    <li><strong>init properties bridge the gap:</strong> Allow <code>new Product("A", 10) { Name = "B" }</code>, combining both approaches.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Default:</strong> Simple DTOs, testing stubs, or when all fields have sensible defaults.</li>
+                    <li><strong>Parameterized:</strong> Business objects where null or 0 are invalid (e.g., EmailAddress, OrderId).</li>
+                    <li><strong>init + Parameterized:</strong> Best of both worlds—mandatory fields via constructor, optional via initializer.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Assuming <code>new Product()</code> works after defining <code>Product(string, decimal)</code>—it doesn't.</li>
+                    <li>Forgetting that <code>init</code> properties don't replace the need for validation in constructors.</li>
+                    <li>Confusing <code>default(T)</code> (returns null for classes) with the default constructor.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Define a parameterized constructor to enforce non-null, valid state.</li>
+                    <li><code>init</code> properties (C# 9+) make parameterized constructors more flexible.</li>
+                    <li>Primary constructors (C# 12) are parameterized by nature.</li>
+                    <li>The compiler only generates a default constructor if the class has no constructors defined.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 21 ============ -->
+        <article class="question-card" data-question-id="21">
+            <h2 class="question-title">21. What is a copy constructor? How is it implemented in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-21">Show answer</button>
+            <div id="answer-21" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A copy constructor is a constructor that creates a new object by copying the values from an existing object of the same type. C# does not provide a built-in copy constructor; it must be implemented manually by the developer. It is used to create independent clones, preventing unintended sharing of mutable state.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Copy constructors are not inherited or generated automatically.</li>
+                    <li>Signature is <code>public ClassName(ClassName other)</code>.</li>
+                    <li><code>this(...)</code> or <code>base(...)</code> can be used for chaining.</li>
+                    <li>For deep copies, clone nested reference types (e.g., <code>List&lt;T&gt;</code>).</li>
+                    <li>Records provide <code>with</code> expressions as a modern alternative.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Person {
+    public string Name { get; init; }
+    public List<string> Hobbies { get; init; } = new();
+
+    // Copy constructor
+    public Person(Person other) {
+        Name = other.Name;
+        Hobbies = new List<string>(other.Hobbies); // Shallow copy (but List is cloned)
+    }
+}
+
+// Usage
+var original = new Person { Name = "Alice", Hobbies = { "Reading" } };
+var copy = new Person(original); // Independent object
+copy.Hobbies.Add("Coding"); // Doesn't affect 'original.Hobbies'</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A copy constructor is like photocopying a signed contract. The original and copy are separate documents—you can annotate the copy without altering the original. This is crucial for undo/redo, caching, or passing data to background threads.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Shallow vs Deep Copy:</strong> Shallow copies reference the same objects; deep copies clone everything.</li>
+                    <li><strong>record with vs Copy Constructor:</strong> <code>var copy = original with { Name = "Bob" };</code> is simpler and safer for immutable data.</li>
+                    <li><strong>ICloneable vs Copy Constructor:</strong> <code>ICloneable.Clone()</code> is not type-safe; copy constructors are.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>State Isolation: Prevent concurrent modification bugs in multithreaded code.</li>
+                    <li>Undo/Redo Systems: Store snapshots of application state.</li>
+                    <li>Safe Parameter Passing: Avoid letting called methods mutate your objects.</li>
+                    <li>Testing: Create test fixtures without affecting shared state.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Forgetting to clone nested reference types—<code>Hobbies = other.Hobbies</code> shares the list.</li>
+                    <li>Assuming records need copy constructors—they have <code>with</code> and <code>Clone()</code> built-in.</li>
+                    <li>Using <code>MemberwiseClone()</code> for deep copies—it's shallow and not type-safe.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>C# has no built-in copy constructor—implement it manually.</li>
+                    <li>Records obsolete copy constructors for immutable data—use <code>with</code> expressions instead.</li>
+                    <li>Deep copying requires cloning nested objects, not just fields.</li>
+                    <li>Always document whether your copy is shallow or deep—it's a critical API contract.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 22 ============ -->
+        <article class="question-card" data-question-id="22">
+            <h2 class="question-title">22. What is a static constructor? When is it called?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-22">Show answer</button>
+            <div id="answer-22" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A static constructor is a special constructor that initializes static members of a class. It runs once, automatically, before the first instance is created or any static members are accessed. It has no access modifiers, no parameters, and cannot be called directly. It is thread-safe and ensures static initialization is performed exactly once.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Declared with <code>static ClassName() { }</code>.</li>
+                    <li>Runs before any instance constructor or static member access.</li>
+                    <li>Cannot have parameters or access modifiers.</li>
+                    <li>Cannot be called explicitly or inherited.</li>
+                    <li>Used for static field initialization, logging, or one-time setup.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Logger {
+    private static readonly Dictionary<string, int> _counters = new();
+    private static readonly object _lock = new();
+
+    // Static constructor
+    static Logger() {
+        Console.WriteLine("Logger initialized");
+        // One-time setup: load config, open log file, etc.
+    }
+
+    public static void Log(string message) {
+        lock (_lock) _counters[message] = _counters.GetValueOrDefault(message) + 1;
+    }
+}
+
+// Usage
+Logger.Log("Startup"); // Static constructor runs here, before Log executes</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A static constructor is like the grand opening of a library. Before any patron (instance) enters or checks out a book (static member), the librarians (static constructor) set up the catalog system, calibrate the scanners, and stock the shelves—once, and only once.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Static vs Instance Constructor:</strong> Static runs once per type; instance runs per object.</li>
+                    <li><strong>Static Constructor vs Static Field Initializer:</strong> Field initializers run before the static constructor, in declaration order.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Thread-Safe Initialization: No need for lock—the CLR guarantees single execution.</li>
+                    <li>One-Time Setup: Load configuration, initialize caches, or register services.</li>
+                    <li>Framework Integration: ASP.NET Core uses static constructors for DI container setup.</li>
+                    <li>Singleton Pattern: Initialize the singleton instance.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Trying to call it explicitly—<code>Logger()</code> is invalid syntax.</li>
+                    <li>Adding parameters or access modifiers—it's not allowed.</li>
+                    <li>Assuming it runs at assembly load—it runs on first use of the type.</li>
+                    <li>Throwing exceptions in it—crashes the AppDomain; handle errors gracefully.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Static constructors run once, are thread-safe, and cannot be called.</li>
+                    <li>They are ideal for initializing static resources—loggers, caches, configuration.</li>
+                    <li>They execute before any static field initializers—be aware of order.</li>
+                    <li>Avoid long-running operations—they block all access to the type until complete.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 23 ============ -->
+        <article class="question-card" data-question-id="23">
+            <h2 class="question-title">23. Can a constructor be private? Where is it useful?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-23">Show answer</button>
+            <div id="answer-23" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Yes, constructors can be declared private. A private constructor prevents external code from instantiating the class directly, forcing all object creation through controlled, internal methods. It is commonly used in the Singleton pattern, utility classes, and classes that exist solely to group static members.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Private constructors are not inherited.</li>
+                    <li>A class with only private constructors cannot be instantiated externally.</li>
+                    <li>Must provide public static methods or properties to obtain instances (e.g., <code>GetInstance()</code>).</li>
+                    <li>Often used with static classes, but static classes require private constructors.</li>
+                    <li>Records cannot have private constructors—the compiler generates public ones.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class DatabaseConnection {
+    private static readonly DatabaseConnection _instance = new();
+
+    // Private constructor
+    private DatabaseConnection() {
+        // Expensive initialization: open connection, load schema
+    }
+
+    public static DatabaseConnection Instance => _instance;
+
+    public void ExecuteQuery(string sql) { /* ... */ }
+}
+
+// Usage
+// var conn = new DatabaseConnection(); // CS1540: Cannot access private constructor
+var conn = DatabaseConnection.Instance; // OK</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A private constructor is like a VIP lounge entrance—only staff (internal code) with the right credentials (static methods) can let guests (instances) in. Outsiders (external code) see only the door sign ("No Entry"), ensuring controlled access.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Private vs Public Constructor:</strong> Public allows <code>new T()</code>; private forces factory methods.</li>
+                    <li><strong>Singleton vs Utility Class:</strong> Singleton provides one instance; utility classes (e.g., Math) have no instances.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Singleton Pattern: Guarantee exactly one instance of a resource-heavy class.</li>
+                    <li>Utility Classes: Path, File, Directory—only static methods, no state.</li>
+                    <li>Factory Pattern: Control instantiation logic (e.g., caching, pooling).</li>
+                    <li>Immutable Factories: <code>ImmutableList&lt;T&gt;.Empty</code> uses private constructors.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Forgetting to provide a public way to get an instance—leaves the class unusable.</li>
+                    <li>Using private constructors in records—it's not allowed; records are designed for public construction.</li>
+                    <li>Assuming static classes can have public constructors—they cannot; static implies sealed and abstract.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Private constructors enforce controlled object creation—a key technique for resource management.</li>
+                    <li>They are mandatory for the Singleton pattern.</li>
+                    <li><code>static</code> classes implicitly have a private constructor—you cannot instantiate them.</li>
+                    <li>Private constructors prevent inheritance abuse.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 24 ============ -->
+        <article class="question-card" data-question-id="24">
+            <h2 class="question-title">24. What is constructor overloading? How does it work in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-24">Show answer</button>
+            <div id="answer-24" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Constructor overloading is the practice of defining multiple constructors in a class, each with a different parameter list. The compiler selects the appropriate constructor based on the arguments provided at the <code>new</code> expression. It enables flexible object creation—supporting various initialization scenarios with the same class name.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Overloaded constructors must differ in number, type, or order of parameters.</li>
+                    <li><code>this(...)</code> calls another constructor in the same class; <code>base(...)</code> calls the base class constructor.</li>
+                    <li>Constructor chaining prevents code duplication.</li>
+                    <li><code>init</code> properties allow additional initialization after the constructor runs.</li>
+                    <li>Primary constructors (C# 12) support overloading via multiple parameter lists.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Rectangle {
+    public double Width { get; init; }
+    public double Height { get; init; }
+
+    // Overloaded constructors
+    public Rectangle() : this(1, 1) { }                // Default to 1x1
+    public Rectangle(double width) : this(width, width) { } // Square
+    public Rectangle(double width, double height) {
+        Width = width;
+        Height = height;
+    }
+}
+
+// Usage
+var r1 = new Rectangle();      // 1x1
+var r2 = new Rectangle(5);      // 5x5 (square)
+var r3 = new Rectangle(3, 4);   // 3x4</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Constructor overloading is like ordering pizza with multiple options: "Just cheese", "Pepperoni", or "Build Your Own". The restaurant (class) has one name ("Pizza"), but different preparation instructions (constructors) based on your choices (arguments).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Overloading vs Overriding:</strong> Overloading = same class, different params; overriding = different class, same params.</li>
+                    <li><strong><code>this(...)</code> vs <code>base(...)</code>:</strong> <code>this()</code> chains to another constructor in the same class; <code>base()</code> calls the parent's constructor.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>API Flexibility: <code>new List&lt;T&gt;()</code>, <code>new List&lt;T&gt;(capacity)</code>, <code>new List&lt;T&gt;(collection)</code>.</li>
+                    <li>Backward Compatibility: Add new overloads without breaking existing code.</li>
+                    <li>Default Values: Provide sensible defaults for optional parameters.</li>
+                    <li>Validation: Each overload can validate its specific parameters.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Forgetting that <code>this(...)</code> or <code>base(...)</code> must be the first statement in the constructor.</li>
+                    <li>Creating ambiguous overloads—e.g., <code>Rectangle(int)</code> and <code>Rectangle(double)</code> with implicit conversions.</li>
+                    <li>Assuming <code>init</code> properties replace overloading—they complement it, allowing post-constructor initialization.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Constructor overloading enables intuitive, flexible object creation.</li>
+                    <li><code>this(...)</code> chaining is essential for avoiding duplicated initialization logic.</li>
+                    <li><code>init</code> properties (C# 9+) extend overloading, allowing <code>new T() { Prop = value }</code>.</li>
+                    <li>Primary constructors (C# 12) support overloading naturally.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 25 ============ -->
+        <article class="question-card" data-question-id="25">
+            <h2 class="question-title">25. How can we make a constructor optional in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-25">Show answer</button>
+            <div id="answer-25" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>Constructors cannot be truly "optional," but their parameters can be made optional using default parameter values or by leveraging <code>init</code> properties and object initializers. Default parameters allow callers to omit arguments, while <code>init</code> properties let you construct an object with minimal parameters and set additional properties afterward.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Default parameters must be compile-time constants (e.g., <code>string.Empty</code>, 0, true).</li>
+                    <li><code>init</code> properties (C# 9+) allow initialization via object initializers: <code>new T() { Prop = value }</code>.</li>
+                    <li><code>required</code> modifier (C# 11) forces initialization, counteracting "optionality" for critical fields.</li>
+                    <li>Primary constructors (C# 12) support default parameters: <code>class T(string name = "Unknown")</code>.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Person {
+    public string Name { get; init; }
+    public int Age { get; init; } = 0; // Default value
+
+    // Constructor with optional parameter
+    public Person(string name, int age = 0) {
+        Name = name;
+        Age = age;
+    }
+}
+
+// Usage
+var p1 = new Person("Alice");          // Age defaults to 0
+var p2 = new Person("Bob", 30);        // Explicit age
+var p3 = new Person("Charlie") { Age = 25 }; // init property after constructor</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>Making constructor parameters optional is like a car's feature list: "Base Model" comes with essentials; "Premium Package" adds extras. Default parameters are the base model; <code>init</code> properties are the à la carte menu—you choose extras at purchase time.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Default Parameters vs init:</strong> Defaults are set at construction; init allows setting after construction but before use.</li>
+                    <li><strong>required vs Optional:</strong> <code>required string Name;</code> makes Name mandatory, even with defaults.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>API Usability: <code>new HttpClient()</code> vs <code>new HttpClient(handler)</code>.</li>
+                    <li>Backward Compatibility: Add a new optional parameter without breaking existing calls.</li>
+                    <li>Immutability: Combine defaults with init for flexible, safe initialization.</li>
+                    <li>Clarity: <code>new Person("A")</code> is clearer than <code>new Person("A", 0, null, false)</code>.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Using non-constant values for defaults—e.g., <code>DateTime.Now</code> is invalid.</li>
+                    <li>Forgetting that optional parameters are resolved at compile time—caller's default is used, not callee's.</li>
+                    <li>Assuming <code>init</code> properties make all parameters optional—they don't; they add flexibility after the constructor.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Default parameters make constructor arguments optional at the call site.</li>
+                    <li><code>init</code> properties (C# 9+) provide post-constructor initialization, enhancing flexibility.</li>
+                    <li><code>required</code> modifier (C# 11) ensures critical fields are never omitted, balancing optionality and safety.</li>
+                    <li>Primary constructors (C# 12) support default parameters seamlessly.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 26 ============ -->
+        <article class="question-card" data-question-id="26">
+            <h2 class="question-title">26. What is a destructor in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-26">Show answer</button>
+            <div id="answer-26" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A destructor (or finalizer) in C# is a special method with the syntax <code>~ClassName()</code> that is called automatically by the garbage collector (GC) when an object is about to be reclaimed. It is used to release unmanaged resources (e.g., file handles, network sockets) that the GC cannot track. Destructors are non-deterministic—there's no guarantee when they'll run.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Syntax: <code>~MyClass() { /* cleanup */ }</code>.</li>
+                    <li>Cannot have access modifiers, parameters, or be called explicitly.</li>
+                    <li>Invoked by the GC on a finalizer thread, not the main thread.</li>
+                    <li>Should not be used for managed resources—use <code>IDisposable</code> and <code>using</code> instead.</li>
+                    <li><code>Dispose(bool disposing)</code> pattern combines <code>IDisposable</code> and destructors for safe cleanup.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class FileWrapper : IDisposable {
+    private FileStream _file;
+
+    public FileWrapper(string path) => _file = new FileStream(path, FileMode.Open);
+
+    // Destructor for unmanaged cleanup (fallback)
+    ~FileWrapper() {
+        Dispose(false);
+    }
+
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this); // Skip destructor if Dispose() called
+    }
+
+    protected virtual void Dispose(bool disposing) {
+        if (disposing) {
+            _file?.Dispose(); // Clean up managed resources
+        }
+        // Clean up unmanaged resources here (if any)
+    }
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A destructor is like a janitor cleaning a hotel room after the guest has checked out and the front desk (GC) has marked it vacant. You can't schedule the janitor—you just know the room will be cleaned eventually. For immediate cleaning, you call the front desk (<code>Dispose()</code>).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Destructor vs Dispose():</strong> Destructor is non-deterministic (GC-controlled); Dispose() is deterministic (developer-controlled).</li>
+                    <li><strong>IDisposable vs Destructor:</strong> IDisposable is for all cleanup; destructor is a fallback for unmanaged resources only.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Safety Net: Ensures unmanaged resources are released even if Dispose() is forgotten.</li>
+                    <li>Legacy Interop: Cleaning up Win32 handles or COM objects.</li>
+                    <li>Framework Code: Rare in application code; common in low-level libraries.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Using destructors for managed resources—it's inefficient and unnecessary.</li>
+                    <li>Assuming destructors run immediately after <code>obj = null</code>—they run when the GC decides.</li>
+                    <li>Throwing exceptions in destructors—can crash the process.</li>
+                    <li>Forgetting <code>GC.SuppressFinalize(this)</code> in Dispose()—causes double cleanup.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Destructors are for unmanaged resources only—never for managed ones.</li>
+                    <li>IDisposable + using is the preferred, deterministic pattern for resource management.</li>
+                    <li>The Dispose(bool) pattern is the gold standard for safe, efficient cleanup.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 27 ============ -->
+        <article class="question-card" data-question-id="27">
+            <h2 class="question-title">27. When is a destructor called in C#?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-27">Show answer</button>
+            <div id="answer-27" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A destructor is called by the garbage collector (GC) non-deterministically, during finalization, when an object is discovered to be unreachable and the GC decides to reclaim its memory. There is no guarantee when this will occur—it could be seconds, minutes, or never (if the app exits first). It runs on a dedicated finalizer thread, not the thread that created the object.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Called only once, by the GC, on the finalizer thread.</li>
+                    <li>Execution order is not guaranteed—destructors for objects in the same generation may run in any order.</li>
+                    <li>If <code>Dispose()</code> is called, <code>GC.SuppressFinalize(this)</code> should be used to skip the destructor.</li>
+                    <li>Destructors are not called for objects that are still reachable or for static objects.</li>
+                    <li><code>Environment.Exit()</code> may terminate the process before finalizers run.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Logger {
+    private static int _count = 0;
+    public Logger() => Interlocked.Increment(ref _count);
+
+    ~Logger() { // Destructor
+        Interlocked.Decrement(ref _count);
+        Console.WriteLine($"Logger finalized. Count: {_count}");
+    }
+}
+
+// Usage
+for (int i = 0; i < 1000; i++) new Logger();
+GC.Collect();                // Forces collection, but finalizers may run later
+GC.WaitForPendingFinalizers(); // Blocks until all queued finalizers complete</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A destructor is like a delayed insurance claim. You file the claim (object becomes unreachable), but the payout (destructor call) happens only when the insurance company (GC) processes it—on their schedule, not yours. For immediate payout, you call the agent (<code>Dispose()</code>).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Destructor vs Dispose():</strong> Destructor = GC-scheduled, nondeterministic; Dispose() = developer-scheduled, deterministic.</li>
+                    <li><strong>using vs Destructor:</strong> using ensures Dispose() runs at the end of a scope; destructor is a backup.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li>Fallback Safety: Guarantees unmanaged resource cleanup if Dispose() is missed.</li>
+                    <li>Legacy Code: Required for interop with unmanaged code.</li>
+                    <li>Framework Development: Building low-level libraries.</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Relying on destructors for timely cleanup—using is required for files, databases, etc.</li>
+                    <li>Accessing managed objects in destructors—they may already be finalized.</li>
+                    <li>Assuming <code>GC.Collect()</code> runs finalizers immediately—it queues them for the finalizer thread.</li>
+                    <li>Forgetting that finalizers delay GC—objects with destructors survive at least one more collection cycle.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Destructors run at the GC's convenience, not yours—never rely on timing.</li>
+                    <li><code>GC.WaitForPendingFinalizers()</code> blocks until all queued finalizers complete.</li>
+                    <li>Destructors are discouraged in modern C#—IAsyncDisposable and using declarations are preferred.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 28 ============ -->
+        <article class="question-card" data-question-id="28">
+            <h2 class="question-title">28. What is the difference between a destructor and the Dispose method?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-28">Show answer</button>
+            <div id="answer-28" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>A destructor (<code>~ClassName()</code>) is a non-deterministic, GC-triggered method for cleaning up unmanaged resources. The <code>Dispose()</code> method (from <code>IDisposable</code>) is a deterministic, developer-triggered method for cleaning up both managed and unmanaged resources. <code>Dispose()</code> is called explicitly or via <code>using</code>; destructors are a last-resort safety net.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li><code>Dispose()</code> must be public, parameterless, and implement <code>IDisposable</code>.</li>
+                    <li><code>Dispose()</code> should call <code>GC.SuppressFinalize(this)</code> to skip the destructor.</li>
+                    <li>Destructors cannot be called directly; <code>Dispose()</code> can be called anytime.</li>
+                    <li><code>using</code> statements compile to try/finally blocks that call <code>Dispose()</code>.</li>
+                    <li><code>IAsyncDisposable</code> is the async equivalent for <code>await using</code>.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class ResourceManager : IDisposable {
+    private FileStream _file;
+    private IntPtr _handle; // Unmanaged (example)
+
+    public ResourceManager(string path) {
+        _file = new FileStream(path, FileMode.Open);
+        // _handle = CreateFile(path); // P/Invoke
+    }
+
+    // Dispose() - deterministic cleanup
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    // Destructor - non-deterministic fallback
+    ~ResourceManager() => Dispose(false);
+
+    protected virtual void Dispose(bool disposing) {
+        if (disposing) {
+            _file?.Dispose(); // Managed
+        }
+        // if (_handle != IntPtr.Zero) { CloseHandle(_handle); } // Unmanaged
+    }
+}
+
+// Usage
+using (var rm = new ResourceManager("file.txt")) {
+    // Use rm
+} // Dispose() called automatically</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p><code>Dispose()</code> is like returning a rental car—you hand over the keys (call <code>Dispose()</code>) and get your deposit back immediately. The destructor is like the rental company eventually finding the car if you never returned it—you can't rely on when that happens.</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Determinism:</strong> Dispose() = immediate; destructor = whenever GC runs.</li>
+                    <li><strong>Scope:</strong> Dispose() cleans managed and unmanaged; destructor = unmanaged only.</li>
+                    <li><strong>Control:</strong> Developer controls Dispose(); GC controls destructors.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <ul>
+                    <li><strong>Dispose():</strong> For all resource cleanup—files, connections, memory.</li>
+                    <li><strong>Destructor:</strong> As a backup for unmanaged resources only.</li>
+                    <li><strong>using:</strong> Ensures Dispose() is always called, even on exceptions.</li>
+                    <li><strong>IAsyncDisposable:</strong> For async cleanup (e.g., <code>await using</code>).</li>
+                </ul>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Implementing a destructor without IDisposable—it's useless without the Dispose() pattern.</li>
+                    <li>Calling Dispose() from a destructor without the disposing flag—can access disposed managed objects.</li>
+                    <li>Forgetting GC.SuppressFinalize(this)—causes double cleanup and performance issues.</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Dispose() is the only correct way to release resources deterministically.</li>
+                    <li>Destructors are a fallback for unmanaged resources only—rare in application code.</li>
+                    <li>The Dispose(bool) pattern is the industry standard for safe, efficient cleanup.</li>
+                    <li><code>using</code> is syntactic sugar for try/finally—guarantees Dispose() runs.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+        <!-- ============ QUESTION 29 ============ -->
+        <article class="question-card" data-question-id="29">
+            <h2 class="question-title">29. Can a destructor be overloaded?</h2>
+            <button class="expand-btn" aria-expanded="false" aria-controls="answer-29">Show answer</button>
+            <div id="answer-29" class="answer hidden" aria-hidden="true">
+                <h4>Short Definition / Explanation</h4>
+                <p>No, a destructor cannot be overloaded in C#. A class can have at most one destructor, declared with the syntax <code>~ClassName()</code>. Since destructors have no parameters and no access modifiers, there is no way to create multiple versions with different signatures. Overloading requires differing parameter lists, which destructors do not support.</p>
+
+                <h4>C#-Specific Rules & Keywords</h4>
+                <ul>
+                    <li>Syntax is fixed: <code>~MyClass() { }</code>.</li>
+                    <li>No parameters, no return type, no access modifiers.</li>
+                    <li>Cannot be inherited or overridden.</li>
+                    <li>A class with a destructor implicitly has a finalizer registered with the GC.</li>
+                    <li><code>IDisposable</code> is the correct pattern for multiple cleanup strategies.</li>
+                </ul>
+
+                <h4>Simple Code Example</h4>
+                <pre><code>public class Resource {
+    // Valid destructor
+    ~Resource() => Console.WriteLine("Cleaning up...");
+
+    // Invalid: Cannot overload destructors
+    // ~Resource(bool force) { } // CS0569: Destructors cannot have parameters
+    // private ~Resource() { }    // CS0570: Destructors cannot have access modifiers
+}</code></pre>
+
+                <h4>Real-World Analogy / Use Case</h4>
+                <p>A destructor is like a single "emergency exit" in a building. There can only be one; you can't have multiple exits with different names—they all serve the same purpose but only one is allowed by the building code (C# language).</p>
+
+                <h4>Key Differences / Comparisons</h4>
+                <ul>
+                    <li><strong>Destructor vs Method:</strong> Destructors cannot be overloaded; methods can.</li>
+                    <li><strong>Destructor vs Constructor:</strong> Constructors can be overloaded; destructors cannot.</li>
+                </ul>
+
+                <h4>Advantages & When to Use</h4>
+                <p>Not applicable—destructors cannot be overloaded, so you don't need to consider when to overload them. If you need multiple cleanup strategies, use the <code>IDisposable</code> pattern or separate methods.</p>
+
+                <h4>Common Exam Pitfalls & Tricky Points</h4>
+                <ul>
+                    <li>Thinking destructors can be overloaded like constructors—they cannot.</li>
+                    <li>Attempting to add parameters to a destructor—results in compiler error.</li>
+                    <li>Confusing destructors with <code>Dispose()</code> overloads (which are just method overloads).</li>
+                </ul>
+
+                <h4>Quick Revision Takeaways</h4>
+                <ul>
+                    <li>Destructors cannot be overloaded—exactly one per class.</li>
+                    <li>Syntax is fixed: <code>~ClassName()</code>.</li>
+                    <li>For multiple cleanup paths, use <code>IDisposable</code> and method overloads.</li>
+                </ul>
+            </div>
+            <button class="review-btn" data-reviewed="false">Mark as Reviewed</button>
+        </article>
+
+    </main>
+
+    <script>
+/**
+ * JavaScript for Futuristic OOP Exam Prep
+ * Features:
+ * - Mark as Reviewed (toggles state, persists in localStorage)
+ * - Circular progress bar updates dynamically
+ * - Smooth expand/collapse of answers
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Wrap answer contents for grid-template-rows transition trick
+    document.querySelectorAll('.answer').forEach(function(ans) {
+        var inner = document.createElement('div');
+        inner.className = 'answer-inner';
+        while (ans.firstChild) inner.appendChild(ans.firstChild);
+        ans.appendChild(inner);
+    });
+
+    // ---------- DOM elements ----------
+    const questionCards = document.querySelectorAll('.question-card');
+    const totalQuestions = questionCards.length;
+    const progressCircle = document.querySelector('.progress-circle');
+    const progressPercentSpan = document.getElementById('review-percentage');
+    const STORAGE_KEY = 'oopExamReviewed';
+
+    // ---------- Load / save reviewed IDs ----------
+    function loadReviewedIds() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                return [];
+            }
+        }
+        return [];
+    }
+
+    function saveReviewedIds(ids) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    }
+
+    // ---------- Update progress bar (circular conic-gradient) ----------
+    function updateProgress(reviewedIds) {
+        const reviewedCount = reviewedIds.length;
+        const percentage = totalQuestions === 0 ? 0 : Math.round((reviewedCount / totalQuestions) * 100);
+        // degrees for conic gradient: 100% = 360deg
+        const degrees = percentage * 3.6;
+
+        // Update circle background
+        progressCircle.style.background = `conic-gradient(#00ffff 0deg ${degrees}deg, #1f2a4a ${degrees}deg 360deg)`;
+
+        // Update percentage text
+        progressPercentSpan.textContent = percentage + '%';
+
+        // Update ARIA value for accessibility
+        progressCircle.setAttribute('aria-valuenow', percentage);
+    }
+
+    // ---------- Set button appearance for reviewed state ----------
+    function setReviewButtonState(button, reviewed) {
+        if (reviewed) {
+            button.classList.add('reviewed');
+            button.setAttribute('data-reviewed', 'true');
+            button.textContent = 'Reviewed ✓';
+        } else {
+            button.classList.remove('reviewed');
+            button.setAttribute('data-reviewed', 'false');
+            button.textContent = 'Mark as Reviewed';
+        }
+    }
+
+    // ---------- Initialize page from localStorage ----------
+    let reviewedIds = loadReviewedIds();
+
+    // Loop through cards and set initial states
+    questionCards.forEach(card => {
+        const cardId = card.getAttribute('data-question-id');
+        const reviewBtn = card.querySelector('.review-btn');
+        const expandBtn = card.querySelector('.expand-btn');
+        const answerDiv = card.querySelector('.answer');
+
+        // If this card is marked as reviewed in storage, set button state
+        if (reviewedIds.includes(cardId)) {
+            setReviewButtonState(reviewBtn, true);
+        } else {
+            setReviewButtonState(reviewBtn, false);
+        }
+
+        // ---------- Expand / collapse functionality ----------
+        expandBtn.addEventListener('click', function() {
+            const isExpanded = expandBtn.getAttribute('aria-expanded') === 'true';
+            // Toggle hidden class on answer
+            answerDiv.classList.toggle('hidden');
+            // Update ARIA and button text
+            if (answerDiv.classList.contains('hidden')) {
+                expandBtn.setAttribute('aria-expanded', 'false');
+                expandBtn.textContent = 'Show answer';
+                answerDiv.setAttribute('aria-hidden', 'true');
+            } else {
+                expandBtn.setAttribute('aria-expanded', 'true');
+                expandBtn.textContent = 'Hide answer';
+                answerDiv.setAttribute('aria-hidden', 'false');
+            }
+        });
+
+        // ---------- Mark as Reviewed toggle ----------
+        reviewBtn.addEventListener('click', function() {
+            const currentlyReviewed = reviewBtn.getAttribute('data-reviewed') === 'true';
+            const newReviewedState = !currentlyReviewed;
+
+            // Update button appearance
+            setReviewButtonState(reviewBtn, newReviewedState);
+
+            // Update reviewedIds array
+            if (newReviewedState) {
+                if (!reviewedIds.includes(cardId)) {
+                    reviewedIds.push(cardId);
+                }
+            } else {
+                reviewedIds = reviewedIds.filter(id => id !== cardId);
+            }
+
+            // Save to localStorage
+            saveReviewedIds(reviewedIds);
+
+            // Update progress bar
+            updateProgress(reviewedIds);
+        });
+    });
+
+    // ---------- Initial progress update ----------
+    updateProgress(reviewedIds);
+
+    // Optional: if no cards, ensure progress is 0
+    if (totalQuestions === 0) {
+        updateProgress([]);
+    }
+
+    // ---------- Ensure expand buttons have correct initial ARIA (hidden answers) ----------
+    questionCards.forEach(card => {
+        const expandBtn = card.querySelector('.expand-btn');
+        const answerDiv = card.querySelector('.answer');
+        if (answerDiv.classList.contains('hidden')) {
+            expandBtn.setAttribute('aria-expanded', 'false');
+            expandBtn.textContent = 'Show answer';
+            answerDiv.setAttribute('aria-hidden', 'true');
+        } else {
+            // In case some answer is not hidden initially (shouldn't happen)
+            expandBtn.setAttribute('aria-expanded', 'true');
+            expandBtn.textContent = 'Hide answer';
+            answerDiv.setAttribute('aria-hidden', 'false');
+        }
+    });
+});
+</script>
+</body>
+</html>
