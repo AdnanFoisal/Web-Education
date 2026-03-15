@@ -339,22 +339,36 @@ body::after {
   color: #ffb86b;
 }
 
+.answer .table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
 .answer table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
-  margin: 1rem 0;
   background: rgba(0,0,0,0.3);
 }
 
 .answer th, .answer td {
   border: 1px solid #3f4b7a;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   text-align: left;
+  white-space: nowrap;
+}
+
+.answer td {
+  white-space: normal;
+  min-width: 120px;
 }
 
 .answer th {
   background: #1e2a4a;
   color: #0ff;
+  white-space: nowrap;
 }
 
 /* ===== BUTTONS ===== */
@@ -2688,6 +2702,14 @@ document.addEventListener('DOMContentLoaded', function() {
         inner.className = 'answer-inner';
         while (ans.firstChild) inner.appendChild(ans.firstChild);
         ans.appendChild(inner);
+    });
+
+    // Wrap all tables in a scrollable container so they can scroll horizontally
+    document.querySelectorAll('.answer table').forEach(function(table) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'table-scroll-wrapper';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
     });
 
     // ---------- DOM elements ----------
